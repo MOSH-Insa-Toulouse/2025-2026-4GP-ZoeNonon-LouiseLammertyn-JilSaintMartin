@@ -14,7 +14,7 @@ Ce projet se divise en plusieurs étapes décrites ci-dessous.
 ### Matériel
 
 ### LTspice
-Aller à [2.LTSpice](#https://github.com/MOSH-Insa-Toulouse/2025-2026-4GP-ZoeNonon-LouiseLammertyn-JilSaintMartin/tree/main/2.LTSpice)
+Aller à [2.LTSpice](https://github.com/MOSH-Insa-Toulouse/2025-2026-4GP-ZoeNonon-LouiseLammertyn-JilSaintMartin/tree/main/2.LTSpice)
 
 ### Kicad
 
