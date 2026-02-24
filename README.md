@@ -14,7 +14,7 @@ Ce projet se divise en plusieurs étapes décrites ci-dessous.
 ### Matériel
 
 ### LTspice
-Aller à [2.LTSpice](#/2.LTSpice)
+Aller à [2.LTSpice](#./2.LTSpice)
 
 ### Kicad
 
