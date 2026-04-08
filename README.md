@@ -34,3 +34,6 @@ Aller à [6.Banc de tests](https://github.com/MOSH-Insa-Toulouse/2025-2026-4GP-Z
 Aller à [7.Datasheet](https://github.com/MOSH-Insa-Toulouse/2025-2026-4GP-ZoeNonon-LouiseLammertyn-JilSaintMartin/tree/main/7.Datasheet)
 
 ### Conclusion (répondre à la question: est ce que ce capteur peut remplacer un flexeur?)
+
+### Prise de notes
+Ecran OLED fonctionne, utiliser le programme OLED dans folder Arduino
