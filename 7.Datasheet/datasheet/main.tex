@@ -1,0 +1,212 @@
+
+\documentclass[a4paper,12pt,oneside,pdflatex,italian,final,twocolumn]{article}
+
+
+
+\usepackage[utf8]{inputenc}
+\usepackage{parallel}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+
+\usepackage[export]{adjustbox}
+\usepackage[margin=0.5in]{geometry}
+\addtolength{\topmargin}{0in}
+
+\usepackage{libertine}
+\renewcommand*\familydefault{\sfdefault}  %% Only if the base font of the document is to be sans serif
+\usepackage[T1]{fontenc}
+
+
+
+
+
+
+
+\title{graphic strain Sensor}
+\author{Nonon Zoé, Lammertyn Louise, Saint-Martin Jil }
+\date{April 2019}
+
+\begin{document}
+
+\pagestyle{fancy}
+
+\lhead{insa toulouse}
+\chead {\today}
+\rhead{Projet capteur}
+
+
+\onecolumn
+
+\begin{figure}
+\begin{minipage}{0.47\textwidth}
+\centering
+\includegraphics[width=.7\textwidth,left,]{logo.png}
+
+\end{minipage}
+\hfill
+\begin{minipage}{0.47\textwidth}
+\raggedleft
+\Huge \textbf{Graphic Strain Sensor}
+\end{minipage}
+\end{figure}
+
+
+
+\begin{figure}
+\begin{minipage}{0.47\textwidth}
+\section{Overview}
+\begin{itemize}
+    \item Paper-based graphite strain sensor
+    \item Analog response based on resistance variation
+    \item Sensitive to tensile and compressive deformation
+    \item Low-cost and easy fabrication (pencil deposition)
+    \item Compatible with 0--5V measurement circuits
+    \item Flexible and lightweight structure
+\end{itemize}
+
+
+
+\end{minipage}
+\hfill
+\begin{minipage}{0.47\textwidth}
+\centering
+\includegraphics[width=0.7\textwidth,right]{flex-sensor.png}
+
+\end{minipage}
+\end{figure}
+
+
+
+
+\section{Description}
+
+The Graphite Strain Sensor is based on a conductive network of graphite particles deposited on a paper substrate.
+
+When a pencil trace is drawn on paper, graphite particles adhere to the fibers, forming a thin conductive film.
+ This film behaves as a disordered granular system where electrical conduction occurs through contacts between graphite particles.
+
+Mechanical deformation affects this network:
+\begin{itemize}
+    \item Under tensile strain, the distance between particles increases, reducing electrical contacts and increasing resistance.
+    \item Under compressive strain, particles are pushed closer together, improving connectivity and decreasing resistance.
+\end{itemize}
+
+The sensor response is therefore governed by variations in the percolation network and tunneling effects between neighboring particles.
+
+Due to its structure, the sensor is highly sensitive to small deformations but also influenced by fabrication parameters such as graphite density,
+ pencil grade, and environmental conditions (humidity, temperature).
+
+The resulting resistance variation can be measured using an  voltage divider circuit, to obtain a usable analog signal.
+
+\section{Technical specification}
+
+\centering
+\begin{tabular}{lcccc}
+\toprule
+Parameter & Min & Typical & Max & Unit \\
+\midrule
+Supply voltage & -- & 5 & 5.25 & V \\
+Output voltage & 0 & -- & 5 & V \\
+Output current & -- & $10^{-7}$ & -- & A \\
+Operating temperature & 10 & 20 & 35 & °C \\
+Storage temperature & 0 & -- & 60 & °C \\
+Humidity (operating) & 0 & 30 & 60 & \% \\
+Sensor resistance & $10^5$ & $10^6$ & $10^7$ & $\Omega$ \\
+Thickness & 15& -- & 35 & mm \\
+Weight & 70 & -- & 140 & mg \\
+Number of pins & \multicolumn{3}{c}{2} & -- \\
+\bottomrule
+
+\end{tabular}
+\begin{tabular}{lcccc}
+\toprule
+Pad & name & Value &\\
+\midrule
+Pad 1 & Vin & à remplir  \\
+Pad 2 & Out  & à remplir \\
+\bottomrule
+\end{tabular}
+
+\raggedright
+
+
+
+\section{Pin Configuration}
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+Pin Arduino & Signal & Description \\
+\midrule
+5V & VCC & Power supply to sensor and circuit \\
+GND & GND & Common ground \\
+
+A0 & AO & Amplified analog output \\
+A1 & FLEX & Flex sensor input \\
+
+D10 & SS & Digital Potentiometer \\
+D11 & MOSI & S Digital Potentiometer  \\
+D12 & MISO &  Digital Potentiometer) \\
+D13 & SCK &  Clock \\
+
+A4 & SDA & I2C Data (OLED display) \\
+A5 & SCL & I2C Clock (OLED display) \\
+
+D2 & CLK & Encoder clock signal \\
+D4 & DATA & Encoder data signal \\
+D5 & SW & Encoder push button \\
+
+D7 & TX & Bluetooth transmission \\
+D8 & RX & Bluetooth reception \\
+
+
+\bottomrule
+\end{tabular}
+\end{center}
+
+
+
+\raggedright
+
+\section{Measures}
+\centering
+\begin{figure} [h]
+\centering
+\includegraphics[width=0.3\textwidth,]{mesure.png}
+
+\end{figure}
+
+\section{Kicad }
+
+\begin{figure}
+\centering
+\includegraphics[width=0.5\textwidth,left,]{shm.png}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=0.5\textwidth,left,]{pcb.png}
+\end{figure}
+
+
+\section{Résultat}
+
+\begin{figure}
+\centering
+\includegraphics[width=0.5\textwidth,left,]{shm.png}
+\end{figure}
+
+
+\begin{figure}
+\centering
+\includegraphics[width=0.5\textwidth,left,]{pcb.png}
+\end{figure}
+
+\section{Réponse au question }
+
+
+\end{document}
+
+
+
