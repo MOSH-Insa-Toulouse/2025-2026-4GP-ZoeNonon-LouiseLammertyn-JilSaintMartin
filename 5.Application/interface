@@ -1,0 +1,96 @@
+import sys
+import serial
+import pyqtgraph as pg
+from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QLabel
+from PyQt5.QtCore import QTimer
+
+# --- CONSTANTES ISSUES DE TON CODE ARDUINO & PDF ---
+VCC = 5.0
+R1 = 100000.0   # 100k 
+R3 = 100000.0   # 100k 
+R5 = 10000.0    # 10k 
+RES_POT = 5000.
+
+class SensorInterface(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Monitoring Capteur Graphite / Flex")
+        self.resize(900, 600)
+
+        # Connexion Série (Ajuste le port COM, 9600 bauds selon ton sketch)
+        # Si tu utilises le Bluetooth, trouve le port COM sortant de ton module
+        try:
+            self.ser = serial.Serial('COM3', 9600, timeout=0.1) 
+        except:
+            print("Erreur: Impossible de se connecter au port série.")
+            sys.exit()
+
+        # Layout
+        self.central_widget = QWidget()
+        self.setCentralWidget(self.central_widget)
+        self.layout = QVBoxLayout(self.central_widget)
+
+        # Affichage de la Résistance
+        self.label_res = QLabel("Résistance: -- Ω")
+        self.label_res.setStyleSheet("font-size: 28px; color: #e74c3c; font-weight: bold;")
+        self.layout.addWidget(self.label_res)
+
+        # Graphique
+        self.graph_widget = pg.PlotWidget()
+        self.graph_widget.setBackground('k')
+        self.graph_widget.showGrid(x=True, y=True)
+        self.graph_widget.setLabel('left', 'Résistance', units='Ω')
+        self.layout.addWidget(self.graph_widget)
+
+        self.data_x = list(range(100))
+        self.data_y = [0] * 100
+        self.line = self.graph_widget.plot(self.data_x, self.data_y, pen=pg.mkPen(color='g', width=2))
+
+        # Timer
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.update_data)
+        self.timer.start(50) # 20Hz pour correspondre au delay(50) de ton LiveVIEW
+
+    def calculate_resistance(self, raw_byte):
+        # 1. Retrouver la valeur ADC (ton code Arduino divise par 4)
+        adc_val = raw_byte * 4
+        
+        if adc_val <= 0: return 0
+        
+        # 2. Convertir en Tension
+        v_out = adc_val * (VCC / 1023.0)
+        
+        # 3. Formule complexe du PDF pour le capteur graphite 
+        # Rc = ((1 + (R3/res_pot)) * (VCC/V_out)) * R1 - R1 - R5
+        try:
+            term1 = 1 + (R3 / RES_POT)
+            term2 = VCC / v_out
+            rc = (term1 * term2) * R1 - R1 - R5
+            return round(rc, 2)
+        except ZeroDivisionError:
+            return 0
+
+    def update_data(self):
+        if self.ser.in_waiting > 0:
+            # Lire un octet (format binaire envoyé par mySerial.write)
+            raw_data = self.ser.read(1)
+            if raw_data:
+                byte_val = ord(raw_data)
+                res_val = self.calculate_resistance(byte_val)
+
+                # Update UI
+                self.label_res.setText(f"Résistance: {res_val} Ω")
+                
+                # Update Graph
+                self.data_y = self.data_y[1:] + [res_val]
+                self.line.setData(self.data_x, self.data_y)
+
+    def closeEvent(self, event):
+        self.ser.close()
+        event.accept()
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    window = SensorInterface()
+    window.show()
+    sys.exit(app.exec_())
