@@ -28,6 +28,17 @@ Adafruit_SSD1306 ecranOLED(nombreDePixelsEnLargeur, nombreDePixelsEnHauteur, &Wi
 volatile unsigned int encoder0Pos = 0;
 
 
+volatile int menuIndex = 0;
+
+// pour le menu
+unsigned long lastMoveTime = 0;
+const int validationDelay = 2000; // 2 secondes
+
+bool modeChoisi = false;
+int mode = 0; // 0 = calibration, 1 = mesure
+const int NB_CHOIX_MENU = 2; // 0=Calibration, 1=Mesure
+
+
 //Fonction qui lit la tension en sortie de l'amplificateur 
 float  lecture_tension(){
   float Vadc = analogRead(flexPin);
@@ -48,6 +59,15 @@ void ecriture_potentiometre(uint8_t cmd, uint8_t data, uint8_t ssPin)
   SPI.transfer(data);       
   digitalWrite(ssPin, HIGH);
   SPI.endTransaction();
+}
+
+void init_oled() {
+  ecranOLED.clearDisplay();
+  ecranOLED.setCursor(0,0);
+  ecranOLED.setTextSize(1);
+  ecranOLED.println("Bienvenue, calibration en cours");
+  ecranOLED.display();
+  
 }
 
 void calibration(){
@@ -115,17 +135,17 @@ void affichage_ecran(){
   ecranOLED.display();
 }
 
-void doEncoder() {
+void doEncoder1() {
 
   if (digitalRead(encoder0PinB)==HIGH) {
-    if (encoder0Pos = 30){
+    if (encoder0Pos == 30){
       encoder0Pos = 0;
     }
     else{
     encoder0Pos++;
     }
   } else {
-    if (encoder0Pos =0){
+    if (encoder0Pos ==0){
       encoder0Pos = 30;
     }
     else{
@@ -133,6 +153,62 @@ void doEncoder() {
     }
   }
 }
+void doEncoder() {
+  if (digitalRead(encoder0PinB) == HIGH) {
+    if (encoder0Pos == 30) encoder0Pos = 0;
+    else encoder0Pos++;
+  } else {
+    if (encoder0Pos == 0) encoder0Pos = 30;
+    else encoder0Pos--;
+  }
+
+  // Met à jour menuIndex selon la position de l'encodeur
+  // 0-14 = choix 0, 15-30 = choix 1
+  if (encoder0Pos < 15) menuIndex = 0;
+  else menuIndex = 1;
+
+  // Reset timer validation
+  lastMoveTime = millis();
+}
+
+void Afficher_menu() {
+
+  ecranOLED.clearDisplay();
+  ecranOLED.setTextSize(1);
+  ecranOLED.setCursor(0,0);
+
+  ecranOLED.println("Choix du mode:");
+  ecranOLED.println();
+
+  if (menuIndex == 0) {
+    ecranOLED.println("> Calibration");
+    ecranOLED.println("  Mesure");
+  } else {
+    ecranOLED.println("  Calibration");
+    ecranOLED.println("> Mesure");
+  }
+
+  ecranOLED.println();
+  ecranOLED.println("Attente validation...");
+
+  ecranOLED.display();
+}
+
+
+
+
+void avant() {
+  float tension;
+  tension=lecture_tension();
+  Serial.println(tension);
+  affichage_ecran();
+
+  Serial.print("Position:");
+  Serial.println (encoder0Pos, DEC);
+
+  delay(500);
+}
+
 
 void setup() {
   //---Initialisation du potentiomètre---
@@ -151,6 +227,11 @@ void setup() {
   ecranOLED.setTextColor(SSD1306_WHITE);
   ecranOLED.setTextWrap(true);
 
+  init_oled();
+
+ 
+  delay(2000);
+
   //---Initialisation de l'encodeur rotatoire---
   pinMode(encoder0PinA, INPUT); 
   digitalWrite(encoder0PinA, HIGH);       
@@ -163,14 +244,34 @@ void setup() {
 }
 
 
+
 void loop() {
-  float tension;
-  tension=lecture_tension();
-  Serial.println(tension);
-  affichage_ecran();
 
-  Serial.print("Position:");
-  Serial.println (encoder0Pos, DEC);
+  // --- MENU ---
+  if (!modeChoisi) {
+    Afficher_menu();
 
-  delay(500);
+    // Si aucune action pendant 2 secondes → validation
+    if (millis() - lastMoveTime > validationDelay) {
+      mode = menuIndex;
+      modeChoisi = true;
+    }
+  }
+
+  // --- MODE CALIBRATION ---
+  else if (mode == 0) {
+    calibration();
+    modeChoisi = false; // retour menu
+    lastMoveTime = millis();
+  }
+
+  // --- MODE MESURE ---
+  else if (mode == 1) {
+    affichage_ecran();
+  }
+
+  delay(100);
 }
+
+
+
