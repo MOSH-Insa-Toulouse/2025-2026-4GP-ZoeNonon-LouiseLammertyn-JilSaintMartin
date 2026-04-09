@@ -1,77 +1,106 @@
+from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QLabel, QPushButton
+from PyQt5.QtCore import QTimer, QTime
 import sys
 import serial
 import pyqtgraph as pg
-from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QLabel
-from PyQt5.QtCore import QTimer
 
-class RealTimeGraph(QMainWindow):
+# --- CONSTANTES ---
+VCC = 5.0
+R1 = 100000.0
+R3 = 100000.0
+R5 = 10000.0
+RES_POT = 5000.
+
+class SensorInterface(QMainWindow):
     def __init__(self):
         super().__init__()
+        self.setWindowTitle("Monitoring Capteur Graphite / Flex")
+        self.resize(900, 600)
 
-        # --- Configuration de la fenêtre ---
-        self.setWindowTitle("Graphique de Résistance du Capteur")
-        self.resize(800, 500)
+        # Connexion Série
+        try:
+            self.ser = serial.Serial('COM7', 9600, timeout=0.1)
+        except:
+            print("Erreur: Impossible de se connecter au port série.")
+            sys.exit()
+
+        # Layout
         self.central_widget = QWidget()
         self.setCentralWidget(self.central_widget)
         self.layout = QVBoxLayout(self.central_widget)
 
-        # --- Label pour la valeur en texte ---
-        self.label_value = QLabel("Attente des données...")
-        self.label_value.setStyleSheet("font-size: 20px; font-weight: bold; color: #2c3e50;")
-        self.layout.addWidget(self.label_value)
+        # Label résistance
+        self.label_res = QLabel("Résistance: -- Ω")
+        self.label_res.setStyleSheet("font-size: 28px; color: #e74c3c; font-weight: bold;")
+        self.layout.addWidget(self.label_res)
 
-        # --- Configuration du Graphique (PyQtGraph) ---
+        # Bouton pour démarrer le tracé de 10s
+        self.start_btn = QPushButton("Tracer 10 secondes")
+        self.start_btn.clicked.connect(self.start_10s_trace)
+        self.layout.addWidget(self.start_btn)
+
+        # Graphique
         self.graph_widget = pg.PlotWidget()
-        self.graph_widget.setBackground('w') # Fond blanc
+        self.graph_widget.setBackground('k')
         self.graph_widget.showGrid(x=True, y=True)
         self.graph_widget.setLabel('left', 'Résistance', units='Ω')
-        self.graph_widget.setLabel('bottom', 'Temps (échantillons)')
         self.layout.addWidget(self.graph_widget)
 
-        # Données du graph
-        self.max_points = 200 # Nombre de points affichés à l'écran
-        self.data_x = list(range(self.max_points))
-        self.data_y = [0.0] * self.max_points
-        self.line = self.graph_widget.plot(self.data_x, self.data_y, pen=pg.mkPen(color='b', width=2))
+        self.data_x = list(range(100))
+        self.data_y = [0] * 100
+        self.line = self.graph_widget.plot(self.data_x, self.data_y, pen=pg.mkPen(color='g', width=2))
 
-        # --- Connexion Série ---
-        # REMPLACE 'COM3' par ton port (ex: '/dev/ttyUSB0' sur Linux/Mac)
-        try:
-            self.ser = serial.Serial('COM7', 9600, timeout=0.1)
-        except Exception as e:
-            self.label_value.setText(f"Erreur Port Série: {e}")
-            self.ser = None
-
-        # --- Timer pour mettre à jour le graph ---
+        # Timer lecture continue
         self.timer = QTimer()
-        self.timer.setInterval(30) # 30ms = fluide
-        self.timer.timeout.connect(self.update_plot)
-        self.timer.start()
+        self.timer.timeout.connect(self.update_data)
+        self.timer.start(50)
 
-    def update_plot(self):
-        if self.ser and self.ser.in_waiting > 0:
-            try:
-                # Lecture de la ligne envoyée par l'Arduino
-                line = self.ser.readline().decode('utf-8').strip()
-                if line:
-                    value = float(line)
-                    
-                    # Mise à jour du label
-                    self.label_value.setText(f"Résistance actuelle : {value:.2f} Ω")
+        # Timer pour tracé temporaire de 10s
+        self.trace_timer = QTimer()
+        self.trace_timer.timeout.connect(self.stop_10s_trace)
+        self.tracing = False
 
-                    # Décalage des données (Scrolling graph)
-                    self.data_y = self.data_y[1:] + [value]
+    def calculate_resistance(self, raw_byte):
+        adc_val = raw_byte * 4
+        if adc_val <= 0: return 0
+        v_out = adc_val * (VCC / 1023.0)
+        try:
+            term1 = 1 + (R3 / RES_POT)
+            term2 = VCC / v_out
+            rc = (term1 * term2) * R1 - R1 - R5
+            return round(rc, 2)
+        except ZeroDivisionError:
+            return 0
+
+    def update_data(self):
+        if self.ser.in_waiting > 0:
+            raw_data = self.ser.read(1)
+            if raw_data:
+                byte_val = ord(raw_data)
+                res_val = self.calculate_resistance(byte_val)
+                self.label_res.setText(f"Résistance: {res_val} Ω")
+
+                # Si mode 10s actif, tracer le graphe
+                if self.tracing:
+                    self.data_y = self.data_y[1:] + [res_val]
                     self.line.setData(self.data_x, self.data_y)
-            except Exception as e:
-                print(f"Erreur de lecture: {e}")
+
+    def start_10s_trace(self):
+        self.tracing = True
+        self.data_y = [0] * 100  # reset graphe
+        self.line.setData(self.data_x, self.data_y)
+        self.trace_timer.start(10000)  # 10 secondes
+
+    def stop_10s_trace(self):
+        self.tracing = False
+        self.trace_timer.stop()
 
     def closeEvent(self, event):
-        if self.ser:
-            self.ser.close()
+        self.ser.close()
         event.accept()
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    window = RealTimeGraph()
+    window = SensorInterface()
     window.show()
     sys.exit(app.exec_())
