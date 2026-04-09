@@ -74,6 +74,8 @@ Ensuite nous avons realiqer le pcb, afin de router tous nos éléments
 <img width="852" height="602" alt="shm" src="https://github.com/user-attachments/assets/e6f07f1a-847f-4858-b204-001d56c1e0d7" />
 
 <img width="755" height="602" alt="pcb" src="https://github.com/user-attachments/assets/fbcbb2ab-9b43-4ea8-ba69-89117455dc1d" />
+<img width="2162" height="1256" alt="image" src="https://github.com/user-attachments/assets/fb70385a-7eba-4ba1-b248-b9d658bd53f9" />
+
 
 
 Aller à [3.KiCad](https://github.com/MOSH-Insa-Toulouse/2025-2026-4GP-ZoeNonon-LouiseLammertyn-JilSaintMartin/tree/main/3.KiCad)
