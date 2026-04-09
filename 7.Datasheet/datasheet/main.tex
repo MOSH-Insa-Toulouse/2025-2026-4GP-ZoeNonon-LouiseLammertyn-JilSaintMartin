@@ -97,7 +97,7 @@ The sensor response is therefore governed by variations in the percolation netwo
 Due to its structure, the sensor is highly sensitive to small deformations but also influenced by fabrication parameters such as graphite density,
  pencil grade, and environmental conditions (humidity, temperature).
 
-The resulting resistance variation can be measured using an  voltage divider circuit, to obtain a usable analog signal.
+The resulting resistance variation can be measured using a transimpedance circuit, to obtain a usable analog signal.
 
 \section{Technical specification}
 
@@ -167,46 +167,30 @@ D8 & RX & Bluetooth reception \\
 
 
 
-\raggedright
-
-\section{Measures}
-\centering
-\begin{figure} [h]
-\centering
-\includegraphics[width=0.3\textwidth,]{mesure.png}
-
+\section{Kicad (Schéma et PCB)}
+\begin{figure}[h]
+    \centering
+    \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{shm.png}
+        \caption{Schéma électronique}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{pcb.png}
+        \caption{Routage du PCB}
+    \end{minipage}
 \end{figure}
 
-\section{Kicad }
-
-\begin{figure}
+\section{Mesure}
 \centering
-\includegraphics[width=0.5\textwidth,left,]{shm.png}
-\end{figure}
-
-\begin{figure}
-\centering
-\includegraphics[width=0.5\textwidth,left,]{pcb.png}
-\end{figure}
-
+\includegraphics[width=0.6\textwidth]{mesure.png}
 
 \section{Résultat}
-
-\begin{figure}
 \centering
-\includegraphics[width=0.5\textwidth,left,]{shm.png}
-\end{figure}
+\includegraphics[width=0.6\textwidth]{mesure.png}
 
-
-\begin{figure}
-\centering
-\includegraphics[width=0.5\textwidth,left,]{pcb.png}
-\end{figure}
-
-\section{Réponse au question }
-
+\section{Réponse aux questions}
 
 \end{document}
-
-
-
