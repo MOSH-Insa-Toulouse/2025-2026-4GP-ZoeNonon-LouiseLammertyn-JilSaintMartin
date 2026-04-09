@@ -14,6 +14,10 @@ float Rflex_min; //Résistance au repos calibrée
 #define MCP_SHTDWN 0b00100001
 const int ssMCPin = 8; 
 
+//--- Déclaration de l'état du switch
+bool switchLastState = HIGH; // état précédent du switch pour debounce // état précédent du switch pour debounce
+bool in_menu = HIGH;
+
 //---Initialisation de l'écran OLED---
 #define nombreDePixelsEnLargeur 128         // Taille de l'écran OLED, en pixel, au niveau de sa largeur
 #define nombreDePixelsEnHauteur 64          // Taille de l'écran OLED, en pixel, au niveau de sa hauteur
@@ -30,9 +34,7 @@ volatile unsigned int encoder0Pos = 0;
 
 volatile int menuIndex = 0;
 
-// pour le menu
-unsigned long lastMoveTime = 0;
-const int validationDelay = 2000; // 2 secondes
+
 
 bool modeChoisi = false;
 int mode = 0; // 0 = calibration, 1 = mesure
@@ -129,6 +131,7 @@ void affichage_ecran(){
   ecranOLED.println();
 
   ecranOLED.setTextSize(2); 
+
   tension=lecture_tension();
   ecranOLED.println(tension);
 
@@ -153,6 +156,18 @@ void doEncoder1() {
     }
   }
 }
+
+void menu() {
+  //La variable in_menu change d'état à chaque appui sur le switch
+  if (digitalRead(Switch) == LOW) {
+    delay(200);
+    if (in_menu == false) {
+      in_menu = true;
+    } else {
+      in_menu = false;
+    }
+  }
+}
 void doEncoder() {
   if (digitalRead(encoder0PinB) == HIGH) {
     if (encoder0Pos == 30) encoder0Pos = 0;
@@ -169,7 +184,10 @@ void doEncoder() {
 
   // Reset timer validation
   lastMoveTime = millis();
+
 }
+
+
 
 void Afficher_menu() {
 
@@ -239,26 +257,17 @@ void setup() {
   digitalWrite(encoder0PinB, HIGH);     
   attachInterrupt(0, doEncoder, RISING); 
 
-  //---Calibration de la tension aux bornes du capteur
-  //calibration();
 }
 
 
 int lastMenuIndex = -1; // pour détecter un vrai changement de sélection
-
 void loop() {
-    // --- MENU ---
-    if (!modeChoisi) {
-        // Affichage du menu uniquement si le choix change
-        if (menuIndex != lastMenuIndex) {
-            Afficher_menu();
-            lastMenuIndex = menuIndex;
-            lastMoveTime = millis(); // on bouge → reset timer
-        }
-
-        // Validation après 2 secondes d'inactivité
-        if (millis() - lastMoveTime > validationDelay) {
-            mode = menuIndex;
+    // Lecture du switch (actif LOW)
+    bool switchState = digitalRead(SWITCH_PIN);
+    if (switchState == LOW && switchLastState == HIGH) { 
+        delay(50); // debounce
+        if (digitalRead(SWITCH_PIN) == LOW) {
+            mode = menuIndex;     // Valider le choix courant
             modeChoisi = true;
             ecranOLED.clearDisplay();
             ecranOLED.setCursor(0,0);
@@ -266,20 +275,28 @@ void loop() {
             if (mode == 0) ecranOLED.println("Mode Calibration choisi");
             else ecranOLED.println("Mode Mesure choisi");
             ecranOLED.display();
-            delay(1000); // petit temps pour montrer le message
+            delay(1000);
         }
     }
+    switchLastState = switchState;
+
+    // --- MENU ---
+    if (!modeChoisi) {
+        if (menuIndex != lastMenuIndex) {
+            Afficher_menu();
+            lastMenuIndex = menuIndex;
+        }
+    }
+    // --- MODE CALIBRATION ---
     else if (mode == 0) {
         calibration();
         modeChoisi = false;
-        lastMoveTime = millis();
-        lastMenuIndex = -1; // reset affichage menu
+        lastMenuIndex = -1; // reset menu
     }
+    // --- MODE MESURE ---
     else if (mode == 1) {
         affichage_ecran();
     }
 
     delay(50);
 }
-
-
