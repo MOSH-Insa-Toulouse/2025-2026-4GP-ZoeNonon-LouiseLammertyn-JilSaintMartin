@@ -72,14 +72,14 @@ Pour ce faire, nous utilisons la suite logicielle  KiCad.
 
 Cette phase de conception se décompose en trois étapes majeures :
 
-3.1. Saisie Schématique et Assignation
+Saisie Schématique et Empreinte
 La première étape consiste à reproduire le circuit de l’amplificateur transimpédance.
 Intégration des composants : Nous y plaçons l'AOP LTC1050, les composants passifs (résistances, condensateurs) et les connecteurs nécessaires à l'Arduino Uno, l'écran OLED et l'encodeur rotatif.
 Association des empreintes : Chaque symbole schématique est lié à une empreinte physique réelle. Cette étape est cruciale pour assurer que les composants pourront être soudés correctement sur le cricuit final.
 
 <img width="852" height="602" alt="shm" src="https://github.com/user-attachments/assets/e6f07f1a-847f-4858-b204-001d56c1e0d7" />
 
-3.2. Routage et Placement 
+ Routage et Placement 
 Le passage au routage permet de définir la disposition physique des éléments sur la carte de cuivre.
 Placement des composants et routages : Nous avons disposé les composants afin de pouvoir router par la suite le plus afficacement possible, sans que les composants et les pistes ce superposent.
 .
@@ -87,7 +87,7 @@ Plan de masse : Un plan de masse a été intégré pour stabiliser les potentiel
 
 <img width="755" height="602" alt="pcb" src="https://github.com/user-attachments/assets/fbcbb2ab-9b43-4ea8-ba69-89117455dc1d" />
 
-3.3. Visualisation 3D et Vérification
+Visualisation 3D et Vérification
 Enfin, KiCad permet une modélisation 3D du projet. Cet outil nous a permis de :
 Vérifier l'encombrement mécanique des composants.
 Anticiper l'ergonomie de la carte (accès aux connecteurs, lisibilité de l'écran).
@@ -100,6 +100,8 @@ Valider la cohérence globale avant la fabrication du PCB.
 Aller à [3.KiCad](https://github.com/MOSH-Insa-Toulouse/2025-2026-4GP-ZoeNonon-LouiseLammertyn-JilSaintMartin/tree/main/3.KiCad)
 
 ### Fabrication PCB
+<img width="423" height="370" alt="image" src="https://github.com/user-attachments/assets/f2a7d98e-83db-400a-ab24-7c4c89ce1e0a" />
+
 
 
 ### Arduino
