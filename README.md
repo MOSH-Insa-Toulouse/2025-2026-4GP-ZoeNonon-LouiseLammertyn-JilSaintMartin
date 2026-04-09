@@ -43,12 +43,12 @@ Un capteur de déformation en papier low tech
 
 Pour réaliser l'amplificateur transimpédance, nous avons utilisé
 
-Un amplificateur opérationnel LTC1050
-Deux condensateurs de 100nF
-Un condensateur de 1uF
-Deux résistances de 100k
-Deux résistances de 1k
-Une résistance de 10k
+- Un amplificateur opérationnel LTC1050
+- Deux condensateurs de 100nF
+- Un condensateur de 1uF
+- Deux résistances de 100k
+- Deux résistances de 1k
+- Une résistance de 10k
 
 ### LTspice
 La première étape de se projet simuler le circuit de capteur sur LT spice. 
@@ -70,6 +70,12 @@ La deuxième étape à été de réaliser le PCB afin de faire de circuit éléc
 Pour cela nous avons fait le circuit shématique. Celui ci piermet de mettre en place le circuit éléectronique, d'assosier les pins, de
 gérer la librairire d'empreinte. Nous avons également faire la plaque en 3d afin de bien placer nos composants 
 Ensuite nous avons realiqer le pcb, afin de router tous nos éléments 
+
+<img width="852" height="602" alt="shm" src="https://github.com/user-attachments/assets/e6f07f1a-847f-4858-b204-001d56c1e0d7" />
+
+<img width="755" height="602" alt="pcb" src="https://github.com/user-attachments/assets/fbcbb2ab-9b43-4ea8-ba69-89117455dc1d" />
+
+
 Aller à [3.KiCad](https://github.com/MOSH-Insa-Toulouse/2025-2026-4GP-ZoeNonon-LouiseLammertyn-JilSaintMartin/tree/main/3.KiCad)
 
 ### Fabrication PCB
