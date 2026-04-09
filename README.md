@@ -66,14 +66,33 @@ Dans la suite du projet, R2 sera remplacée par un potentiomètre numérique, af
 Aller à [2.LTSpice](https://github.com/MOSH-Insa-Toulouse/2025-2026-4GP-ZoeNonon-LouiseLammertyn-JilSaintMartin/tree/main/2.LTSpice)
 
 ### Kicad
-La deuxième étape à été de réaliser le PCB afin de faire de circuit éléctronique. Nous avons utilisé le logiciel kicad.
-Pour cela nous avons fait le circuit shématique. Celui ci piermet de mettre en place le circuit éléectronique, d'assosier les pins, de
-gérer la librairire d'empreinte. Nous avons également faire la plaque en 3d afin de bien placer nos composants 
-Ensuite nous avons realiqer le pcb, afin de router tous nos éléments 
+
+Une fois la simulation validée sur LTspice, l'étape suivante consiste à transformer le schéma théorique en un objet physique fonctionnel : le Circuit Imprimé (PCB). 
+Pour ce faire, nous utilisons la suite logicielle  KiCad.
+
+Cette phase de conception se décompose en trois étapes majeures :
+
+3.1. Saisie Schématique et Assignation
+La première étape consiste à reproduire le circuit de l’amplificateur transimpédance.
+Intégration des composants : Nous y plaçons l'AOP LTC1050, les composants passifs (résistances, condensateurs) et les connecteurs nécessaires à l'Arduino Uno, l'écran OLED et l'encodeur rotatif.
+Association des empreintes : Chaque symbole schématique est lié à une empreinte physique réelle. Cette étape est cruciale pour assurer que les composants pourront être soudés correctement sur le cricuit final.
 
 <img width="852" height="602" alt="shm" src="https://github.com/user-attachments/assets/e6f07f1a-847f-4858-b204-001d56c1e0d7" />
 
+3.2. Routage et Placement 
+Le passage au routage permet de définir la disposition physique des éléments sur la carte de cuivre.
+Placement des composants et routages : Nous avons disposé les composants afin de pouvoir router par la suite le plus afficacement possible, sans que les composants et les pistes ce superposent.
+.
+Plan de masse : Un plan de masse a été intégré pour stabiliser les potentiels et réduire le bruit  sur le circuit analogique.
+
 <img width="755" height="602" alt="pcb" src="https://github.com/user-attachments/assets/fbcbb2ab-9b43-4ea8-ba69-89117455dc1d" />
+
+3.3. Visualisation 3D et Vérification
+Enfin, KiCad permet une modélisation 3D du projet. Cet outil nous a permis de :
+Vérifier l'encombrement mécanique des composants.
+Anticiper l'ergonomie de la carte (accès aux connecteurs, lisibilité de l'écran).
+Valider la cohérence globale avant la fabrication du PCB.
+
 <img width="2162" height="1256" alt="image" src="https://github.com/user-attachments/assets/fb70385a-7eba-4ba1-b248-b9d658bd53f9" />
 
 
