@@ -52,6 +52,9 @@ Une résistance de 10k
 
 ### LTspice
 La première étape de se projet simuler le circuit de capteur sur LT spice. 
+Dans un premiere temps nous avons simuluer le à transimpédance ci dessous afin de pourvoir lire la résitance : 
+<img width="885" height="337" alt="capteur" src="https://github.com/user-attachments/assets/771fa828-8ae2-4b6b-a42e-7ae31a5f30cd" />
+
 
 Aller à [2.LTSpice](https://github.com/MOSH-Insa-Toulouse/2025-2026-4GP-ZoeNonon-LouiseLammertyn-JilSaintMartin/tree/main/2.LTSpice)
 
