@@ -21,6 +21,12 @@ const int ssMCPin = 8;
 #define adresseI2CecranOLED     0x3C
 Adafruit_SSD1306 ecranOLED(nombreDePixelsEnLargeur, nombreDePixelsEnHauteur, &Wire, brocheResetOLED);
 
+//---Initialisation de l'encodeur rotatoire---
+#define encoder0PinA  2  //CLK Output A Do not use other pin for clock as we are using interrupt
+#define encoder0PinB  4  //DT Output B
+#define Switch 5 // Switch connection if available
+volatile unsigned int encoder0Pos = 0;
+
 
 //Fonction qui lit la tension en sortie de l'amplificateur 
 float  lecture_tension(){
@@ -109,6 +115,25 @@ void affichage_ecran(){
   ecranOLED.display();
 }
 
+void doEncoder() {
+
+  if (digitalRead(encoder0PinB)==HIGH) {
+    if (encoder0Pos = 30){
+      encoder0Pos = 0;
+    }
+    else{
+    encoder0Pos++;
+    }
+  } else {
+    if (encoder0Pos =0){
+      encoder0Pos = 30;
+    }
+    else{
+    encoder0Pos--;
+    }
+  }
+}
+
 void setup() {
   //---Initialisation du potentiomètre---
   pinMode (ssMCPin, OUTPUT); 
@@ -126,6 +151,13 @@ void setup() {
   ecranOLED.setTextColor(SSD1306_WHITE);
   ecranOLED.setTextWrap(true);
 
+  //---Initialisation de l'encodeur rotatoire---
+  pinMode(encoder0PinA, INPUT); 
+  digitalWrite(encoder0PinA, HIGH);       
+  pinMode(encoder0PinB, INPUT); 
+  digitalWrite(encoder0PinB, HIGH);     
+  attachInterrupt(0, doEncoder, RISING); 
+
   //---Calibration de la tension aux bornes du capteur
   //calibration();
 }
@@ -136,6 +168,9 @@ void loop() {
   tension=lecture_tension();
   Serial.println(tension);
   affichage_ecran();
+
+  Serial.print("Position:");
+  Serial.println (encoder0Pos, DEC);
 
   delay(500);
 }

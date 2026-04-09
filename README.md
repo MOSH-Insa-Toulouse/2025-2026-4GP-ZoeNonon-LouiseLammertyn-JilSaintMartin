@@ -43,22 +43,66 @@ Un capteur de déformation en papier low tech
 
 Pour réaliser l'amplificateur transimpédance, nous avons utilisé
 
-Un amplificateur opérationnel LTC1050
-Deux condensateurs de 100nF
-Un condensateur de 1uF
-Deux résistances de 100k
-Deux résistances de 1k
-Une résistance de 10k
+- Un amplificateur opérationnel LTC1050
+- Deux condensateurs de 100nF
+- Un condensateur de 1uF
+- Deux résistances de 100k
+- Deux résistances de 1k
+- Une résistance de 10k
 
 ### LTspice
 La première étape de se projet simuler le circuit de capteur sur LT spice. 
+Le  montage est un amplificateur à transimpédance (TIA) basé sur l’AOP LTC1050.
+
+Le principe du montage est de convertir le courant traversant le capteur en une tension exploitable. L’amplificateur opérationnel, configuré en transimpédance, permet d’obtenir une tension de sortie proportionnelle à la valeur de la résistance.
+
+Un filtre passe-bas est ajouté en sortie afin de réduire le bruit et de fournir un signal stable, compatible avec une entrée analogique.
+
+Dans la suite du projet, R2 sera remplacée par un potentiomètre numérique, afin de permettre la calibration de l’Arduino sur une plage de tension comprise entre 0 et 5 V.
+<img width="885" height="337" alt="capteur" src="https://github.com/user-attachments/assets/771fa828-8ae2-4b6b-a42e-7ae31a5f30cd" />
+
+
 
 Aller à [2.LTSpice](https://github.com/MOSH-Insa-Toulouse/2025-2026-4GP-ZoeNonon-LouiseLammertyn-JilSaintMartin/tree/main/2.LTSpice)
 
 ### Kicad
+
+Une fois la simulation validée sur LTspice, l'étape suivante consiste à transformer le schéma théorique en un objet physique fonctionnel : le Circuit Imprimé (PCB). 
+Pour ce faire, nous utilisons la suite logicielle  KiCad.
+
+Cette phase de conception se décompose en trois étapes majeures :
+
+Saisie Schématique et Empreinte
+La première étape consiste à reproduire le circuit de l’amplificateur transimpédance.
+Intégration des composants : Nous y plaçons l'AOP LTC1050, les composants passifs (résistances, condensateurs) et les connecteurs nécessaires à l'Arduino Uno, l'écran OLED et l'encodeur rotatif.
+Association des empreintes : Chaque symbole schématique est lié à une empreinte physique réelle. Cette étape est cruciale pour assurer que les composants pourront être soudés correctement sur le cricuit final.
+
+<img width="852" height="602" alt="shm" src="https://github.com/user-attachments/assets/e6f07f1a-847f-4858-b204-001d56c1e0d7" />
+
+ Routage et Placement 
+Le passage au routage permet de définir la disposition physique des éléments sur la carte de cuivre.
+Placement des composants et routages : Nous avons disposé les composants afin de pouvoir router par la suite le plus afficacement possible, sans que les composants et les pistes ce superposent.
+.
+Plan de masse : Un plan de masse a été intégré pour stabiliser les potentiels et réduire le bruit  sur le circuit analogique.
+
+<img width="755" height="602" alt="pcb" src="https://github.com/user-attachments/assets/fbcbb2ab-9b43-4ea8-ba69-89117455dc1d" />
+
+Visualisation 3D et Vérification
+Enfin, KiCad permet une modélisation 3D du projet. Cet outil nous a permis de :
+Vérifier l'encombrement mécanique des composants.
+Anticiper l'ergonomie de la carte (accès aux connecteurs, lisibilité de l'écran).
+Valider la cohérence globale avant la fabrication du PCB.
+
+<img width="2162" height="1256" alt="image" src="https://github.com/user-attachments/assets/fb70385a-7eba-4ba1-b248-b9d658bd53f9" />
+
+
+
 Aller à [3.KiCad](https://github.com/MOSH-Insa-Toulouse/2025-2026-4GP-ZoeNonon-LouiseLammertyn-JilSaintMartin/tree/main/3.KiCad)
 
 ### Fabrication PCB
+<img width="423" height="370" alt="image" src="https://github.com/user-attachments/assets/f2a7d98e-83db-400a-ab24-7c4c89ce1e0a" />
+
+
 
 ### Arduino
 Aller à [4.Arduino](https://github.com/MOSH-Insa-Toulouse/2025-2026-4GP-ZoeNonon-LouiseLammertyn-JilSaintMartin/tree/main/4.Arduino)
