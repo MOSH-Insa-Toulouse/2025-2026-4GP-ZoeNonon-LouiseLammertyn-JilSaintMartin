@@ -244,34 +244,42 @@ void setup() {
 }
 
 
+int lastMenuIndex = -1; // pour détecter un vrai changement de sélection
 
 void loop() {
+    // --- MENU ---
+    if (!modeChoisi) {
+        // Affichage du menu uniquement si le choix change
+        if (menuIndex != lastMenuIndex) {
+            Afficher_menu();
+            lastMenuIndex = menuIndex;
+            lastMoveTime = millis(); // on bouge → reset timer
+        }
 
-  // --- MENU ---
-  if (!modeChoisi) {
-    Afficher_menu();
-
-    // Si aucune action pendant 2 secondes → validation
-    if (millis() - lastMoveTime > validationDelay) {
-      mode = menuIndex;
-      modeChoisi = true;
+        // Validation après 2 secondes d'inactivité
+        if (millis() - lastMoveTime > validationDelay) {
+            mode = menuIndex;
+            modeChoisi = true;
+            ecranOLED.clearDisplay();
+            ecranOLED.setCursor(0,0);
+            ecranOLED.setTextSize(1);
+            if (mode == 0) ecranOLED.println("Mode Calibration choisi");
+            else ecranOLED.println("Mode Mesure choisi");
+            ecranOLED.display();
+            delay(1000); // petit temps pour montrer le message
+        }
     }
-  }
+    else if (mode == 0) {
+        calibration();
+        modeChoisi = false;
+        lastMoveTime = millis();
+        lastMenuIndex = -1; // reset affichage menu
+    }
+    else if (mode == 1) {
+        affichage_ecran();
+    }
 
-  // --- MODE CALIBRATION ---
-  else if (mode == 0) {
-    calibration();
-    modeChoisi = false; // retour menu
-    lastMoveTime = millis();
-  }
-
-  // --- MODE MESURE ---
-  else if (mode == 1) {
-    affichage_ecran();
-  }
-
-  delay(100);
+    delay(50);
 }
-
 
 
