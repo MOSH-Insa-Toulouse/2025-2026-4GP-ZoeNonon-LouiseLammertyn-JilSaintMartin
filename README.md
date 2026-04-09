@@ -52,16 +52,28 @@ Une résistance de 10k
 
 ### LTspice
 La première étape de se projet simuler le circuit de capteur sur LT spice. 
-Dans un premiere temps nous avons simuluer le à transimpédance ci dessous afin de pourvoir lire la résitance : 
+Le  montage est un amplificateur à transimpédance (TIA) basé sur l’AOP LTC1050.
+
+Le principe du montage est de convertir le courant traversant le capteur en une tension exploitable. L’amplificateur opérationnel, configuré en transimpédance, permet d’obtenir une tension de sortie proportionnelle à la valeur de la résistance.
+
+Un filtre passe-bas est ajouté en sortie afin de réduire le bruit et de fournir un signal stable, compatible avec une entrée analogique.
+
+Dans la suite du projet, R2 sera remplacée par un potentiomètre numérique, afin de permettre la calibration de l’Arduino sur une plage de tension comprise entre 0 et 5 V.
 <img width="885" height="337" alt="capteur" src="https://github.com/user-attachments/assets/771fa828-8ae2-4b6b-a42e-7ae31a5f30cd" />
+
 
 
 Aller à [2.LTSpice](https://github.com/MOSH-Insa-Toulouse/2025-2026-4GP-ZoeNonon-LouiseLammertyn-JilSaintMartin/tree/main/2.LTSpice)
 
 ### Kicad
+La deuxième étape à été de réaliser le PCB afin de faire de circuit éléctronique. Nous avons utilisé le logiciel kicad.
+Pour cela nous avons fait le circuit shématique. Celui ci piermet de mettre en place le circuit éléectronique, d'assosier les pins, de
+gérer la librairire d'empreinte. Nous avons également faire la plaque en 3d afin de bien placer nos composants 
+Ensuite nous avons realiqer le pcb, afin de router tous nos éléments 
 Aller à [3.KiCad](https://github.com/MOSH-Insa-Toulouse/2025-2026-4GP-ZoeNonon-LouiseLammertyn-JilSaintMartin/tree/main/3.KiCad)
 
 ### Fabrication PCB
+
 
 ### Arduino
 Aller à [4.Arduino](https://github.com/MOSH-Insa-Toulouse/2025-2026-4GP-ZoeNonon-LouiseLammertyn-JilSaintMartin/tree/main/4.Arduino)
