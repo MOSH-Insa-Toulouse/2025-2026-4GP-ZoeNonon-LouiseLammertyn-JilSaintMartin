@@ -23,6 +23,16 @@ Adafruit_SSD1306 ecranOLED(OLED_WIDTH, OLED_HEIGHT, &Wire, OLED_RESET);
 
 // --- Encodeur rotatif ---
 #define BUTTON_PIN  5
+const int encoderPinA = 2;   // CLK encodeur
+const int encoderPinB = 4;   // DT encodeur
+
+// --- Constantes Électroniques  ---
+float VCC = 5.0;
+const float R1 = 100000.0;   // 100k
+const float R3 = 100000.0;   // 100k
+const float R5 = 10000.0;    // 10k
+
+
 
 // --- Menu ---
 int menuIndex = 0;        // 0=Calibration, 1=Mesure, 2=mesure2
