@@ -101,7 +101,13 @@ Aller à [3.KiCad](https://github.com/MOSH-Insa-Toulouse/2025-2026-4GP-ZoeNonon-
 ### Fabrication PCB - Souadage
 <img width="423" height="370" alt="image" src="https://github.com/user-attachments/assets/f2a7d98e-83db-400a-ab24-7c4c89ce1e0a" />
 
-Une fois le fichier pcb validé, nous avons pu l'imprimer le circuit électronique et souder nos composant 
+Une fois le routage validé sous KiCad et le fichier de perçage généré, nous avons pu imprimer notre circuit électronique (merci Cathy). Ensuite, nous avons percé et soudé le montage complet. Avant de passer au code Arduino, nous avons vérifié que tout fonctionnait bien à l'aide d'un multimètre :
+- Vérification que chaque piste relie bien les bons points du schéma.
+
+- Absence totale de court-circuit entre le 5V et le GND.
+
+![IMG_3698](https://github.com/user-attachments/assets/c728011d-2ce3-461f-a145-05f94b24305f)
+![IMG_3697](https://github.com/user-attachments/assets/a1ab8def-40c3-416e-80f5-0c1f6ff07c94)
 
 
 
