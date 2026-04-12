@@ -140,5 +140,9 @@ Aller à [7.Datasheet](https://github.com/MOSH-Insa-Toulouse/2025-2026-4GP-ZoeNo
 
 ### Conclusion (répondre à la question: est ce que ce capteur peut remplacer un flexeur?)
 
-### Prise de notes
-Ecran OLED fonctionne, utiliser le programme OLED dans folder Arduino
+### Erreur rencontré
+RAM -> ecran oled
+Perte de contacte soudure
+Kicad mauvais branchemement
+
+
