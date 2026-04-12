@@ -105,6 +105,9 @@ Une fois le routage validé sous KiCad et le fichier de perçage généré, nous
 - Vérification que chaque piste relie bien les bons points du schéma.
 
 - Absence totale de court-circuit entre le 5V et le GND.
+- 
+<img width="1500" height="1256" alt="image" src="https://github.com/user-attachments/assets/c728011d-2ce3-461f-a145-05f94b24305f" />
+
 
 ![IMG_3698](https://github.com/user-attachments/assets/c728011d-2ce3-461f-a145-05f94b24305f)
 ![IMG_3697](https://github.com/user-attachments/assets/a1ab8def-40c3-416e-80f5-0c1f6ff07c94)
