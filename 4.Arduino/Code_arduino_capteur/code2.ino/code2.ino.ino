@@ -1,6 +1,8 @@
 #include <SPI.h>
 #include <Wire.h>
 #include <Adafruit_SSD1306.h>
+#include <Adafruit_GFX.h>
+
 
 // --- Constantes Capteur ---
 const int flexPin = A0;
@@ -29,7 +31,7 @@ const int ssMCPin = 8;
 #define OLED_WIDTH  128
 #define OLED_HEIGHT 64
 #define OLED_RESET  -1
-#define OLED_ADDR   0x3C
+#define adresseI2CecranOLED     0x3C
 Adafruit_SSD1306 ecranOLED(OLED_WIDTH, OLED_HEIGHT, &Wire, OLED_RESET);
 
 // --- Encodeur rotatif ---
@@ -49,7 +51,7 @@ float lecture_tension() {
   float Vadc = analogRead(flexPin);
   return (Vadc * VCC) / 1023.0;
 }
-float tension_AO;
+
 
 float calculateFlexResistance() {
   float Vadc = lecture_tension();
@@ -58,6 +60,8 @@ float calculateFlexResistance() {
   Rf = ((1+(R3 / R_potentiometre))*(VCC/Vadc))*R1-R1-R5;
   return Rf;
 }
+
+
 
 void ecriture_potentiometre(uint8_t cmd, uint8_t data, uint8_t ssPin) {
   SPI.beginTransaction(SPISettings(14000000, MSBFIRST, SPI_MODE0));
@@ -68,37 +72,38 @@ void ecriture_potentiometre(uint8_t cmd, uint8_t data, uint8_t ssPin) {
   SPI.endTransaction();
 }
 
-void angle
 
 // --- OLED ---
 void init_oled() {
   ecranOLED.clearDisplay();
   ecranOLED.setCursor(0,0);
   ecranOLED.setTextSize(1);
-  ecranOLED.println("Bienvenue!");
+  ecranOLED.println(F("Bienvenue!"));
   ecranOLED.display();
 }
 
 void oled_calibration() {
+  float tension_AO;
   ecranOLED.clearDisplay();
   ecranOLED.setCursor(0,0);
   ecranOLED.setTextSize(1);
-  ecranOLED.println("Calibration en cours...");
-  /*
+  ecranOLED.println(F("Calibration en cours..."));
+  
   if (fin_calib == 1){
     ecranOLED.clearDisplay();
     ecranOLED.setCursor(0,0);
-    ecranOLED.println("Calibration terminee!");
+    ecranOLED.println(F("Calibration terminee!"));
     ecranOLED.println();
-    ecranOLED.println("Tension calibree: ");
-    ecranOLED.println(tension_AO);
+    ecranOLED.println(F("Tension calibree: "));
+    tension_AO= lecture_tension();
+    ecranOLED.print(tension_AO);
     Rflex_min = calculateFlexResistance();
-    ecranOLED.println("Potentiometre calibre position: ");
-    ecranOLED.println(pos);
-    ecranOLED.println("Resistance au repos: ");
-    ecranOLED.println(Rf);
+    ecranOLED.println(F("Position potentiometre: "));
+    ecranOLED.print(pos);
+    ecranOLED.println(F("Resistance au repos: "));
+    ecranOLED.print(Rf);
     
-  }*/
+  }
   ecranOLED.display();
 }
 
@@ -107,7 +112,7 @@ void affichage_ecran_tension() {
   ecranOLED.clearDisplay();
   ecranOLED.setTextSize(2);
   ecranOLED.setCursor(0,0);
-  ecranOLED.println("Tension capteur:");
+  ecranOLED.println(F("Tension capteur:"));
   ecranOLED.println();
   ecranOLED.println(tension);
   ecranOLED.display();
@@ -118,18 +123,18 @@ void affichage_ecran_resistance() {
   ecranOLED.clearDisplay();
   ecranOLED.setTextSize(2);
   ecranOLED.setCursor(0,0);
-  ecranOLED.println("Résistance capteur:");
+  ecranOLED.println(F("Résistance capteur:"));
   ecranOLED.println();
   ecranOLED.println(resistance);
   ecranOLED.display();
 }
 
 void affichage_ecran_angle() {
-  float angle = 0;
+  float angle = calculer_angle();
   ecranOLED.clearDisplay();
   ecranOLED.setTextSize(2);
   ecranOLED.setCursor(0,0);
-  ecranOLED.println("Angle capteur:");
+  ecranOLED.println(F("Angle capteur:"));
   ecranOLED.println();
   ecranOLED.println(angle);
   ecranOLED.display();
@@ -140,18 +145,18 @@ void Afficher_menu() {
   ecranOLED.clearDisplay();
   ecranOLED.setTextSize(1);
   ecranOLED.setCursor(0,0);
-  ecranOLED.println("Choix du mode:");
+  ecranOLED.println(F("Choix du mode:"));
   ecranOLED.println();
-  if(condition == 0) ecranOLED.println("> Tension");
-  else ecranOLED.println("  Tension");
-  if(condition == 1) ecranOLED.println("> Resistance");
-  else ecranOLED.println("  Resistance");
-  if(condition == 2) ecranOLED.println("> Angle");
-  else ecranOLED.println("  Angle");
-  if(condition == 3) ecranOLED.println("> Calibration");
-  else ecranOLED.println("  Calibration");
+  if(condition == 0) ecranOLED.println(F("> Tension"));
+  else ecranOLED.println(F("  Tension"));
+  if(condition == 1) ecranOLED.println(F("> Resistance"));
+  else ecranOLED.println(F("  Resistance"));
+  if(condition == 2) ecranOLED.println(F("> Angle"));
+  else ecranOLED.println(F("  Angle"));
+  if(condition == 3) ecranOLED.println(F("> Calibration"));
+  else ecranOLED.println(F("  Calibration"));
   ecranOLED.println();
-  ecranOLED.println("Appuyez pour valider");
+  ecranOLED.println(F("Appuyez pour valider"));
   ecranOLED.display();
 }
 
@@ -159,17 +164,16 @@ void Afficher_menu() {
 void calibration() {
   float tension_cible = 2.5;
   float diff1, diff2;
-
-  tension_AO = lecture_tension();
+  float tension_AO=lecture_tension();
 
   fin_calib = 0;
 
   diff1 = abs(tension_AO - tension_cible);
-
+/*
   do {
-    Serial.println("Tension mesurée");
+    Serial.println(F("Tension mesurée"));
     Serial.println(tension_AO);
-    Serial.println("Position du potentiomètre");
+    Serial.println(F("Position du potentiomètre"));
     Serial.println(pos);
     ecriture_potentiometre(MCP_WRITE, pos, ssMCPin);
     delay(500);
@@ -186,16 +190,29 @@ void calibration() {
     diff1 = abs(tension_AO - tension_cible);
 
   } while ((tension_AO < 2.4 || tension_AO > 2.6));
-
+*/
+ delay(5000);
   fin_calib = 1;
 
-  Serial.print("Tension calibrée: ");
+  Serial.print(F("Tension calibrée: "));
   Serial.println(tension_AO);
   Rflex_min = calculateFlexResistance();
-  Serial.print("Pot calibré position: ");
+  Serial.print(F("Pot calibré position: "));
   Serial.println(pos);
-  Serial.print("Resistance au repos: ");
+  Serial.print(F("Resistance au repos: "));
   Serial.println(Rflex_min);
+}
+
+float calculer_angle(){
+  float current_R = calculateFlexResistance();
+  float r_flat = Rflex_min; // angle pendant la calibration
+  float r_90 = Rflex_min * 2.5;
+  float angle = (current_R - r_flat) * 90 / (r_90 - r_flat);
+
+  if ( angle < 0) angle = 0;
+  if (angle > 0) angle = 90;
+
+  return angle;
 }
 
 // --- Bouton du potentiometre  ---
@@ -289,17 +306,15 @@ void setup() {
 
   Serial.begin(9600);
 
-  if(!ecranOLED.begin(SSD1306_SWITCHCAPVCC, OLED_ADDR)) {
-    Serial.println(F("Échec OLED"));
-    for(;;);
-  }
+  if(!ecranOLED.begin(SSD1306_SWITCHCAPVCC, adresseI2CecranOLED))
+    while(1);  
   ecranOLED.setTextColor(SSD1306_WHITE);
   ecranOLED.setTextWrap(true);
 
   init_oled();
   delay(1000);
   oled_calibration();
-  //calibration();
+  calibration();
   pinMode(BUTTON_PIN, INPUT_PULLUP);
   Afficher_menu();
   Serial.println("Calibration terminée");
