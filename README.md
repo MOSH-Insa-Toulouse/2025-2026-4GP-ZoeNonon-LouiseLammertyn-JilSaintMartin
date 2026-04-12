@@ -117,16 +117,16 @@ Aller à [4.Arduino](https://github.com/MOSH-Insa-Toulouse/2025-2026-4GP-ZoeNono
 Ensuite nous avons mis en place le code arduino pour pouvoir utilisé le cpateur. Pour cela nous avons mis en place un menu afficher 
 sur l'écran oled pour choisir les différente fonction 
 
-  ##### tension 
+  #### 1 tension 
   Affiche la tension au borne du capteur sur l'ecran Oled 
 
-  ##### Resistance
+  #### 2 Resistance
   Affiche la resistance  sur l'écran Oled
   
-  ##### Angle
+  #### 3 Angle
   Convertie la resitance en une mesure d'angle et l'affiche sur l'écran 
 
-  ##### Calibbration 
+  #### 4 Calibbration 
   Gère la resistance R2 pour avoir une tension au repos de 2.5 V
 
 ### Application
