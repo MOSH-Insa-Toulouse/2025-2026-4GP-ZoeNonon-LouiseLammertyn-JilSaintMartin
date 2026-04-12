@@ -106,18 +106,29 @@ Une fois le routage validé sous KiCad et le fichier de perçage généré, nous
 
 - Absence totale de court-circuit entre le 5V et le GND.
 - 
-<img width="800" height="800" alt="image" src="https://github.com/user-attachments/assets/c728011d-2ce3-461f-a145-05f94b24305f" />
-<img width="800" height="800" alt="image" src="https://github.com/user-attachments/assets/a1ab8def-40c3-416e-80f5-0c1f6ff07c94" />
+<img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/c728011d-2ce3-461f-a145-05f94b24305f" />
+<img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/a1ab8def-40c3-416e-80f5-0c1f6ff07c94" />
+
 
 
 
 ### Arduino
 Aller à [4.Arduino](https://github.com/MOSH-Insa-Toulouse/2025-2026-4GP-ZoeNonon-LouiseLammertyn-JilSaintMartin/tree/main/4.Arduino)
-Ensuite nous avons mis en place le code arduino, pour ce faire nous avons utilisée fait : 
-- un fonction de calibration
-- une fonction de mesure de la resitance
-- une fonction pour gérer l'encododeur rotatoire pour gerer un menu affiché sur l'écran
-- 
+Ensuite nous avons mis en place le code arduino pour pouvoir utilisé le cpateur. Pour cela nous avons mis en place un menu afficher 
+sur l'écran oled pour choisir les différente fonction 
+
+  ## tension 
+  Affiche la tension au borne du capteur sur l'ecran Oled 
+
+  ## Resistance
+  Affiche la resistance  sur l'écran Oled
+  
+  ## Angle
+  Convertie la resitance en une mesure d'angle et l'affiche sur l'écran 
+
+  ## Calibbration 
+  Gère la resistance R2 pour avoir une tension au repos de 2.5 V
+
 ### Application
 Aller à [5.Application](https://github.com/MOSH-Insa-Toulouse/2025-2026-4GP-ZoeNonon-LouiseLammertyn-JilSaintMartin/tree/main/5.Application)
 
