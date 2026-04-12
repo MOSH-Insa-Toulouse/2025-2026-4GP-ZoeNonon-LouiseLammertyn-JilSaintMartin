@@ -114,7 +114,11 @@ Une fois le routage validé sous KiCad et le fichier de perçage généré, nous
 
 ### Arduino
 Aller à [4.Arduino](https://github.com/MOSH-Insa-Toulouse/2025-2026-4GP-ZoeNonon-LouiseLammertyn-JilSaintMartin/tree/main/4.Arduino)
-
+Ensuite nous avons mis en place le code arduino, pour ce faire nous avons utilisée fait : 
+- un fonction de calibration
+- une fonction de mesure de la resitance
+- une fonction pour gérer l'encododeur rotatoire pour gerer un menu affiché sur l'écran
+- 
 ### Application
 Aller à [5.Application](https://github.com/MOSH-Insa-Toulouse/2025-2026-4GP-ZoeNonon-LouiseLammertyn-JilSaintMartin/tree/main/5.Application)
 
