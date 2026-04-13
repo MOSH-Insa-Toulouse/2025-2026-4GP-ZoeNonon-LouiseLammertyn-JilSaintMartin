@@ -153,25 +153,33 @@ Kicad mauvais branchemement
 #define txPin 1 // Correspondant à la broche Rx du module bluetooth
 #define baudrate 9600 
 SoftwareSerial mySerial(rxPin ,txPin); //Definition du software serial
-byte serialRX; // <--- AJOUT BLUETOOTH
 
-Dans void setup:
-
-  mySerial.begin(baudrate); // Initialiser le port bluetooth
-  Serial.begin(baudrate); // Initialiser le port série
-
-
-
-void checkBluetooth() { // <--- AJOUT BLUETOOTH if (mySerial.available() > 0) { // <--- AJOUT BLUETOOTH serialRX = mySerial.read(); // <--- AJOUT BLUETOOTH // Ici, tu peux ajouter des actions si l'appli envoie // des commandes (ex: lancer la mesure à distance) } }
-
-Dans void configuration, calibration, vitesse, borne, mesure, loop
-checkBluetooth(); // <--- AJOUT BLUETOOTH
+// --- FONCTION D'ENVOI BLUETOOTH ---
+void envoyerDonneeBluetooth(float valeur) { // <--- AJOUT BLUETOOTH
+  // Ton appli attend un "Unsigned 1 Byte Number" (0-255)
+  // On mappe la valeur pour qu'elle rentre dans un octet si nécessaire
+  // Ici on envoie la valeur brute/4 ou une valeur d'angle
+  byte aEnvoyer = (byte)constrain(valeur, 0, 255); 
+  mySerial.write(aEnvoyer); 
+}
 
 
-Dans live_view,
-checkBluetooth(); // <--- AJOUT BLUETOOTH
+// OLED
+void affichage_ecran_tension() {
+  float tension = lecture_tension();
+  envoyerDonneeBluetooth(tension * 50); // <--- AJOUT BLUETOOTH (ex: 2.5V -> 125)
 
-mySerial.write(val / 4); // <--- AJOUT BLUETOOTH
+  void affichage_ecran_resistance() {
+  float resistance = calculateFlexResistance();
+  // On divise la résistance par un facteur pour que l'appli puisse l'afficher (0-255)
+  envoyerDonneeBluetooth(resistance / 1000); // <--- AJOUT BLUETOOTH
+
+  void affichage_ecran_angle() {
+  float angle = calculer_angle();
+  envoyerDonneeBluetooth(angle); // <--- AJOUT BLUETOOTH (0-90 deg)
+
+  void setup() {
+  mySerial.begin(9600); // <--- AJOUT BLUETOOTH
 
 
 
