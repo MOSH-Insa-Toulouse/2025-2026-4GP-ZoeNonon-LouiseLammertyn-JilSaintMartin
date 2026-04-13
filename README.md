@@ -146,3 +146,33 @@ Perte de contacte soudure
 Kicad mauvais branchemement
 
 
+
+//Bluetooth
+#include <SoftwareSerial.h>
+#define rxPin 0 // Correspondant à la broche tx du module bluetooth
+#define txPin 1 // Correspondant à la broche Rx du module bluetooth
+#define baudrate 9600 
+SoftwareSerial mySerial(rxPin ,txPin); //Definition du software serial
+byte serialRX; // <--- AJOUT BLUETOOTH
+
+Dans void setup:
+
+  mySerial.begin(baudrate); // Initialiser le port bluetooth
+  Serial.begin(baudrate); // Initialiser le port série
+
+
+
+void checkBluetooth() { // <--- AJOUT BLUETOOTH if (mySerial.available() > 0) { // <--- AJOUT BLUETOOTH serialRX = mySerial.read(); // <--- AJOUT BLUETOOTH // Ici, tu peux ajouter des actions si l'appli envoie // des commandes (ex: lancer la mesure à distance) } }
+
+Dans void configuration, calibration, vitesse, borne, mesure, loop
+checkBluetooth(); // <--- AJOUT BLUETOOTH
+
+
+Dans live_view,
+checkBluetooth(); // <--- AJOUT BLUETOOTH
+
+mySerial.write(val / 4); // <--- AJOUT BLUETOOTH
+
+
+
+
