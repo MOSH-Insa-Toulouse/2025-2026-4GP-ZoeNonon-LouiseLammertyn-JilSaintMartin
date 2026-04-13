@@ -74,8 +74,8 @@ Cette phase de conception se décompose en trois étapes majeures :
 
 Saisie Schématique et Empreinte
 La première étape consiste à reproduire le circuit de l’amplificateur transimpédance.
-Intégration des composants : Nous y plaçons l'AOP LTC1050, les composants passifs (résistances, condensateurs) et les connecteurs nécessaires à l'Arduino Uno, l'écran OLED et l'encodeur rotatif.
-Association des empreintes : Chaque symbole schématique est lié à une empreinte physique réelle. Cette étape est cruciale pour assurer que les composants pourront être soudés correctement sur le cricuit final.
+- Intégration des composants : Nous y plaçons l'AOP LTC1050, les composants passifs (résistances, condensateurs) et les connecteurs nécessaires à l'Arduino Uno, l'écran OLED et l'encodeur rotatif.
+- Association des empreintes : Chaque symbole schématique est lié à une empreinte physique réelle. Cette étape est cruciale pour assurer que les composants pourront être soudés correctement sur le cricuit final.
 
 <img width="852" height="602" alt="shm" src="https://github.com/user-attachments/assets/e6f07f1a-847f-4858-b204-001d56c1e0d7" />
 
@@ -90,7 +90,6 @@ Plan de masse : Un plan de masse a été intégré pour stabiliser les potentiel
 Visualisation 3D et Vérification
 Enfin, KiCad permet une modélisation 3D du projet. Cet outil nous a permis de :
 Vérifier l'encombrement mécanique des composants.
-Anticiper l'ergonomie de la carte (accès aux connecteurs, lisibilité de l'écran).
 Valider la cohérence globale avant la fabrication du PCB.
 
 <img width="2162" height="1256" alt="image" src="https://github.com/user-attachments/assets/fb70385a-7eba-4ba1-b248-b9d658bd53f9" />
@@ -99,13 +98,36 @@ Valider la cohérence globale avant la fabrication du PCB.
 
 Aller à [3.KiCad](https://github.com/MOSH-Insa-Toulouse/2025-2026-4GP-ZoeNonon-LouiseLammertyn-JilSaintMartin/tree/main/3.KiCad)
 
-### Fabrication PCB
+### Fabrication PCB - Souadage
 <img width="423" height="370" alt="image" src="https://github.com/user-attachments/assets/f2a7d98e-83db-400a-ab24-7c4c89ce1e0a" />
+
+Une fois le routage validé sous KiCad et le fichier de perçage généré, nous avons pu imprimer notre circuit électronique (merci Cathy). Ensuite, nous avons percé et soudé le montage complet. Avant de passer au code Arduino, nous avons vérifié que tout fonctionnait bien à l'aide d'un multimètre :
+- Vérification que chaque piste relie bien les bons points du schéma.
+
+- Absence totale de court-circuit entre le 5V et le GND.
+- 
+<img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/c728011d-2ce3-461f-a145-05f94b24305f" />
+<img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/a1ab8def-40c3-416e-80f5-0c1f6ff07c94" />
+
 
 
 
 ### Arduino
 Aller à [4.Arduino](https://github.com/MOSH-Insa-Toulouse/2025-2026-4GP-ZoeNonon-LouiseLammertyn-JilSaintMartin/tree/main/4.Arduino)
+Ensuite nous avons mis en place le code arduino pour pouvoir utilisé le cpateur. Pour cela nous avons mis en place un menu afficher 
+sur l'écran oled pour choisir les différente fonction 
+
+  #### 1 tension 
+  Affiche la tension au borne du capteur sur l'ecran Oled 
+
+  #### 2 Resistance
+  Affiche la resistance  sur l'écran Oled
+  
+  #### 3 Angle
+  Convertie la resitance en une mesure d'angle et l'affiche sur l'écran 
+
+  #### 4 Calibbration 
+  Gère la resistance R2 pour avoir une tension au repos de 2.5 V
 
 ### Application
 Aller à [5.Application](https://github.com/MOSH-Insa-Toulouse/2025-2026-4GP-ZoeNonon-LouiseLammertyn-JilSaintMartin/tree/main/5.Application)
@@ -118,5 +140,9 @@ Aller à [7.Datasheet](https://github.com/MOSH-Insa-Toulouse/2025-2026-4GP-ZoeNo
 
 ### Conclusion (répondre à la question: est ce que ce capteur peut remplacer un flexeur?)
 
-### Prise de notes
-Ecran OLED fonctionne, utiliser le programme OLED dans folder Arduino
+### Erreur rencontré
+RAM -> ecran oled
+Perte de contacte soudure
+Kicad mauvais branchemement
+
+
