@@ -5,7 +5,8 @@
 
 
 // --- Constantes Capteur ---
-const int flexPin = A0;
+const int Graphite_sensor = A0;
+const int flex_sensor = A1;
 float VCC = 5.0;
 const float R_DIV = 47000.0;
 float R3 = 100000;
@@ -13,8 +14,9 @@ float R5 = 10000;
 float R1 = 100000;
 float R_potentiometre;
 float Rf; //Résistance globale 
-int pos = 128;
+int pos = 250;
 float Rflex_min;
+float value_flex;
 
 
 int condition = 0;
@@ -59,6 +61,12 @@ float calculateFlexResistance() {
 
   Rf = ((1+(R3 / R_potentiometre))*(VCC/Vadc))*R1-R1-R5;
   return Rf;
+}
+
+float flex_sensor(){
+  value_flex = analogRead(Graphite_sensor)
+  V_flex = value_flex * Vadc/1023.0
+  resitance_flex = R * V_flex/(Vadc-V_flex)
 }
 
 
@@ -169,14 +177,15 @@ void calibration() {
   fin_calib = 0;
 
   diff1 = abs(tension_AO - tension_cible);
-/*
+
   do {
+    
     Serial.println(F("Tension mesurée"));
     Serial.println(tension_AO);
     Serial.println(F("Position du potentiomètre"));
     Serial.println(pos);
     ecriture_potentiometre(MCP_WRITE, pos, ssMCPin);
-    delay(500);
+    delay(200);
     tension_AO = lecture_tension();
     diff2 = abs(tension_AO - tension_cible);
 
@@ -184,14 +193,13 @@ void calibration() {
       if (pos == 255) pos = 1;
       else pos++;
     } else {
-      if (pos == 0) pos = 254;
+      if (pos == 0) pos = 255;
       else pos--;
     }
     diff1 = abs(tension_AO - tension_cible);
 
   } while ((tension_AO < 2.4 || tension_AO > 2.6));
-*/
- delay(5000);
+
   fin_calib = 1;
 
   Serial.print(F("Tension calibrée: "));
@@ -207,10 +215,11 @@ float calculer_angle(){
   float current_R = calculateFlexResistance();
   float r_flat = Rflex_min; // angle pendant la calibration
   float r_90 = Rflex_min * 2.5;
-  float angle = (current_R - r_flat) * 90 / (r_90 - r_flat);
+  float angle1 = (current_R - r_flat) * 90 / (r_90 - r_flat);
+  float angle = map(current_R, r_flat, r_90, 0.0, 90.0);
 
   if ( angle < 0) angle = 0;
-  if (angle > 0) angle = 90;
+  if (angle > 90) angle = 90;
 
   return angle;
 }
@@ -218,36 +227,87 @@ float calculer_angle(){
 // --- Bouton du potentiometre  ---
 void checkButton() {
   bool switchState = digitalRead(BUTTON_PIN);
+  
+
   if (switchState == LOW && switchLastState == HIGH) {
     delay(50); // debounce
+
     if (digitalRead(BUTTON_PIN) == LOW) {
-      // valider le choix actuel
-      modeChoisi = true;
+
+      if (modeChoisi == false) {
+        // 👉 entrer dans un mode
+        modeChoisi = true;
+      } else {
+        // 👉 sortir du mode → retour menu
+        modeChoisi = false;
+        Afficher_menu();
+      }
+
     }
-    
   }
+
   switchLastState = switchState;
 }
+void validation_pot() {
+  if (modeChoisi == true) {
 
-void validation_pot(){
-   if (modeChoisi == true){
-    if (condition == 0){
-      //fonction  tension
+    if (condition == 0) {
       affichage_ecran_tension();
     }
-    if (condition == 1){
-      // fonction resitance
+    else if (condition == 1) {
       affichage_ecran_resistance();
     }
-    if (condition == 2){
-      //fonction angle
+    else if (condition == 2) {
       affichage_ecran_angle();
     }
-    if (condition == 3){
-      //fonction angle
+    else if (condition == 3) {
       oled_calibration();
       calibration();
       oled_calibration();
+
+      modeChoisi = false;
+      Afficher_menu();
+    }
+
+    
+    //if (condition != 0 && condition != 1 && condition != 2 && condition != 3) {
+      //modeChoisi = false;
+      //Afficher_menu();
+   // }
+  }
+}
+
+
+
+void validation_pot2(){
+   if (modeChoisi == true){
+    if (condition == 0){
+      //fonction  tension
+      do{
+      affichage_ecran_tension();
+      }while(condition == 0);
+    }
+    if (condition == 1){
+      // fonction resitance
+      
+      do{
+      affichage_ecran_resistance();
+      }while(condition == 0);
+    }
+    if (condition == 2){
+      //fonction angle
+      do{
+      affichage_ecran_angle();
+      }while(condition == 0);
+    }
+    if (condition == 3){
+      //fonction angle
+      do{
+      oled_calibration();
+      calibration();
+      oled_calibration();
+      }while(condition == 0);
+      
     }
     modeChoisi = false;
   }
@@ -314,7 +374,7 @@ void setup() {
   init_oled();
   delay(1000);
   oled_calibration();
-  calibration();
+  //calibration();
   pinMode(BUTTON_PIN, INPUT_PULLUP);
   Afficher_menu();
   Serial.println("Calibration terminée");
@@ -323,6 +383,8 @@ void setup() {
 // --- Loop ---
 void loop() {
   checkButton();
+
+  
 
   int ancienneCondition = condition;
   position_encoder();
