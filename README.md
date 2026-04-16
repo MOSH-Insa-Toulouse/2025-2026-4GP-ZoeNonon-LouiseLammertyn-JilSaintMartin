@@ -117,17 +117,21 @@ Aller à [4.Arduino](https://github.com/MOSH-Insa-Toulouse/2025-2026-4GP-ZoeNono
 Ensuite nous avons mis en place le code arduino pour pouvoir utilisé le cpateur. Pour cela nous avons mis en place un menu afficher 
 sur l'écran oled pour choisir les différente fonction 
 
-  #### 1 tension 
-  Affiche la tension au borne du capteur sur l'ecran Oled 
+  #### 1 Tension 
+  Affiche la tension au borne du capteur sur l'écran Oled 
 
-  #### 2 Resistance
-  Affiche la resistance  sur l'écran Oled
+  #### 2 Résistance
+  Affiche la resistance sur l'écran Oled
   
-  #### 3 Angle
-  Convertie la resitance en une mesure d'angle et l'affiche sur l'écran 
-
-  #### 4 Calibbration 
+  #### 3 Calibration 
   Gère la resistance R2 pour avoir une tension au repos de 2.5 V
+
+   #### 3 Capteur
+  Permet de passer du flex sensor au capteur graphite 
+
+  <img width="3024" height="4032" alt="menu" src="https://github.com/user-attachments/assets/2fc0c662-b7a5-4879-86e9-17c6febe129d" />
+
+
 
 ### Application
 Aller à [5.Application](https://github.com/MOSH-Insa-Toulouse/2025-2026-4GP-ZoeNonon-LouiseLammertyn-JilSaintMartin/tree/main/5.Application)
@@ -135,7 +139,33 @@ Aller à [5.Application](https://github.com/MOSH-Insa-Toulouse/2025-2026-4GP-Zoe
 ### Banc de tests
 Aller à [6.Banc de tests](https://github.com/MOSH-Insa-Toulouse/2025-2026-4GP-ZoeNonon-LouiseLammertyn-JilSaintMartin/tree/main/6.Banc%20de%20tests)
 
-### Datasheet
+Pour cette partie, nous avons utilisé un banc de test conçu par les groupes précédents.
+Afin de vérifier les résultats obtenus, nous avons tracé la variation relative de la résistance en fonction de la déformation mécanique. La résistance relative est mesurée pour chaque courbure appliquée au banc de test.
+La déformation peut être calculée à partir de la géométrie du dispositif selon la relation suivante :
+<img width="195" height="77" alt="deformation" src="https://github.com/user-attachments/assets/36a6837b-f27e-4d52-a047-6e39a1ebdb71" />
+ />
+
+ Ensuite, à l’aide du code Arduino, nous avons mesuré la résistance pour quatre types de crayons. Une mesure de référence à plat a d’abord été réalisée, puis des mesures ont été effectuées pour différentes courbures du banc de test, en compression et en tension.
+La résistance relative est définie par :
+ 
+<img width="218" height="77" alt="Rrelative" src="https://github.com/user-attachments/assets/a958a8b9-3cbb-4617-836b-28bab4d56c62" />
+
+### Résulat
+Nous avons obtenu les courbes suivantes :
+<img width="2827" height="1425" alt="Résultat_compression" src="https://github.com/user-attachments/assets/d60e430e-702e-48a4-a128-1575c572bf66" /> 
+<img width="3167" height="1595" alt="resultat_flexion" src="https://github.com/user-attachments/assets/cd6efece-dfbd-4445-902f-7a0a0d65fcdf" />
+
+On observe que les résultats obtenus en flexion présentent une relation globalement linéaire entre la déformation et la variation de résistance. Le capteur est donc particulièrement adapté à la mesure de flexion. Cependant la durée de vie du capteur est courte 
+les valeurs sont tres vraibale lorsque que celui ci a deja été pliée.
+On retrouve bien les résultats attendus concernant la sensibilité du capteur en fonction du grade du crayon. Les crayons "tendres" (ex : 6B, à forte concentration en graphite) présentent une sensibilité plus faible que les crayons plus "durs" (ex : HB). 
+
+Cela s’explique par la structure du réseau conducteur : une plus forte densité de graphite rend le chemin de conduction plus stable, ce qui réduit l’amplitude relative des variations de résistance lors des déformations.
+En revanche, les résultats en compression sont moins concluants. Bien que les courbes restent globalement affines, la variation de résistance n’est pas entièrement exploitable : le signal tend à revenir vers la résistance au repos lorsque le capteur est courbé.
+
+Ce comportement peut s’expliquer par un phénomène mécanique : en compression, la couche de graphite entre en contact avec le banc de test, entraînant une perte de matière  et une modification irréversible du réseau conducteur.
+
+Enfin, nous n’avons pas réussi à obtenir de mesures exploitables avec les crayons H et 2H, car le signal électrique généré était trop faible pour être détecté par le système de mesure.
+
 Aller à [7.Datasheet](https://github.com/MOSH-Insa-Toulouse/2025-2026-4GP-ZoeNonon-LouiseLammertyn-JilSaintMartin/tree/main/7.Datasheet)
 
 ### Conclusion (répondre à la question: est ce que ce capteur peut remplacer un flexeur?)
