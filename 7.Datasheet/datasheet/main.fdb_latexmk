@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1776346657.11299 "/Users/louise/Documents/insa/insa4/semestre 2/du capteur au banc de test/Github/MOSH-Insa-Toulouse/2025-2026-4GP-ZoeNonon-LouiseLammertyn/7.Datasheet/datasheet/main.tex" "main.pdf" "main" 1776346658.91389 0
-  "/Users/louise/Documents/insa/insa4/semestre 2/du capteur au banc de test/Github/MOSH-Insa-Toulouse/2025-2026-4GP-ZoeNonon-LouiseLammertyn/7.Datasheet/datasheet/main.tex" 1776346602.20992 5077 2e66004f194781952370435b25d3d819 ""
+["pdflatex"] 1776349599.79293 "/Users/louise/Documents/insa/insa4/semestre 2/du capteur au banc de test/Github/MOSH-Insa-Toulouse/2025-2026-4GP-ZoeNonon-LouiseLammertyn/7.Datasheet/datasheet/main.tex" "main.pdf" "main" 1776349601.55146 0
+  "/Users/louise/Documents/insa/insa4/semestre 2/du capteur au banc de test/Github/MOSH-Insa-Toulouse/2025-2026-4GP-ZoeNonon-LouiseLammertyn/7.Datasheet/datasheet/main.tex" 1776349597.88793 5219 37d4da0ae45d33860c8d2cefc854e8cd ""
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/libertine/lbtn_25tcsq.enc" 1490131464 2921 8ca0eb0831f9bc5da080d3697cfe67bf ""
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/libertine/lbtn_76gpa5.enc" 1490131464 2933 9ad527ce78d7c5fa0a642dead095f172 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/libertine/lbtn_afusau.enc" 1490131464 3358 dfe33526c2f2184d6b22489aab24ba03 ""
@@ -22,8 +22,10 @@
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/public/libertine/LinBiolinumTB-tlf-t1.tfm" 1490131464 19416 aedd2db224ad278ddf2c411f52d86014 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/public/libertine/LinLibertineT-tlf-t1--base.tfm" 1490131464 1740 2943dd2ba1dcd3849599663c1d2693ef ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/public/libertine/LinLibertineT-tlf-t1.tfm" 1490131464 19504 bdf9fb416f5a91bf56b1ccda887f5b91 ""
+  "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb" 1248133631 36741 fa121aac0049305630cf160b86157ee4 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb" 1248133631 32722 d7379af29a190c3f453aba36302ff5a9 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb" 1248133631 32726 0a1aea6fcd6468ee2cf64d891f5c43c8 ""
+  "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb" 1248133631 32569 5e5ddc8df908dea60932f3c484a54c0d ""
   "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb" 1248133631 32626 4f5c1b83753b1dd3a97d1b399a005b4b ""
   "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/libertine/LinBiolinumT.pfb" 1354061736 548786 1e51d517556d29f2841d57da58668a69 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/libertine/LinBiolinumTB.pfb" 1354061736 687959 b99c9f5a9b28f3dba077d1c078bceb3f ""
@@ -93,8 +95,8 @@
   "Résultat_compression.png" 1776346183.95324 385175 6a9bec620678446b018878c8d3bb190a ""
   "flex-sensor.png" 1775664711.60644 249327 32a7757cd192b7a3952c2800057d5f87 ""
   "logo.png" 1774199113.05912 57250 5d0aec2fae94ae200cc6a9e1123f8546 ""
-  "main.aux" 1776346658.78841 1263 eabeb82663f934515a3c644813e74aa3 "pdflatex"
-  "main.tex" 1776346602.20992 5077 2e66004f194781952370435b25d3d819 ""
+  "main.aux" 1776349601.45287 1267 6256da03ccb366649bc486c6d792971b "pdflatex"
+  "main.tex" 1776349597.88793 5219 37d4da0ae45d33860c8d2cefc854e8cd ""
   "mesure.png" 1775665716.43457 400942 4375a775cad9644502e428656463b3ad ""
   "pcb.png" 1776346641.46403 270533 092a4c3de3b7a703ba80b23b44f3900b ""
   "resultat_flexion.png" 1776346183.96199 405860 091d2de7d5721a26d08717a7e5f318b1 ""

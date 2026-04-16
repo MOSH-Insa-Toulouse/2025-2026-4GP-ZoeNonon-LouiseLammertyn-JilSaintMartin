@@ -123,8 +123,8 @@ Number of pins & \multicolumn{3}{c}{2} & -- \\
 \toprule
 Pad & name & Value &\\
 \midrule
-Pad 1 & Vin & à remplir  \\
-Pad 2 & Out  & à remplir \\
+Pad 1 & Vin & VCC  \\
+Pad 2 & Out  & Analog output \\
 \bottomrule
 \end{tabular}
 
@@ -145,9 +145,8 @@ GND & GND & Common ground \\
 A0 & AO & Amplified analog output \\
 A1 & FLEX & Flex sensor input \\
 
-D10 & SS & Digital Potentiometer \\
+D8 & CS & Digital Potentiometer \\
 D11 & MOSI & S Digital Potentiometer  \\
-D12 & MISO &  Digital Potentiometer) \\
 D13 & SCK &  Clock \\
 
 A4 & SDA & I2C Data (OLED display) \\
@@ -157,8 +156,8 @@ D2 & CLK & Encoder clock signal \\
 D4 & DATA & Encoder data signal \\
 D5 & SW & Encoder push button \\
 
-D7 & TX & Bluetooth transmission \\
-D8 & RX & Bluetooth reception \\
+D10 & TX & Bluetooth transmission \\
+D9 & RX & Bluetooth reception \\
 
 
 \bottomrule
@@ -173,36 +172,50 @@ D8 & RX & Bluetooth reception \\
     \begin{minipage}{0.48\textwidth}
         \centering
         \includegraphics[width=\textwidth]{shm.png}
-        \caption{Schéma électronique}
+        \caption{Electrical diagram}
     \end{minipage}
     \hfill
     \begin{minipage}{0.48\textwidth}
         \centering
         \includegraphics[width=\textwidth]{pcb.png}
-        \caption{Routage du PCB}
+        \caption{PCB routing}
     \end{minipage}
 \end{figure}
 
-\section{Mesure}
-\begin{figure}[h]
-    \centering
-    \begin{minipage}{0.48\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{resultat_flexion.png}
-        \caption{Schéma électronique}
-    \end{minipage}
-    \hfill
-    \begin{minipage}{0.48\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{Résultat_compression.png}
-        \caption{Routage du PCB}
-    \end{minipage}
-\end{figure}
 
-\section{Résultat}
+\section{Low tech Captor}
+\begin{center}
+\includegraphics[width=0.3\textwidth, angle=90]{mesure.png}
+\end{center}
+
+\section{Typical Value}
+
 \centering
-\includegraphics[width=0.6\textwidth]{mesure.png}
+\begin{tabular}{lc}
+\toprule
+Pencil Grade & Flat Resistance \\
+\midrule
+2B & \SI{1.93e6}{\ohm} \\
+HB & \SI{4.08e6}{\ohm} \\
+4B & \SI{5.69e5}{\ohm} \\
+B  & \SI{1.80e6}{\ohm} \\
+\bottomrule
+\end{tabular}
 
+\raggedright
 
-
+\begin{figure}[h]
+\centering
+\begin{minipage}{0.48\textwidth}
+\centering
+\includegraphics[width=\textwidth]{resultat_flexion.png}
+\caption{Bending result}
+\end{minipage}
+\hfill
+\begin{minipage}{0.48\textwidth}
+\centering
+\includegraphics[width=\textwidth]{Résultat_compression.png}
+\caption{Compression result}
+\end{minipage}
+\end{figure}
 \end{document}
