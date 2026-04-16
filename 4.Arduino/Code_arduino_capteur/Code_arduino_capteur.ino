@@ -1,302 +1,310 @@
 #include <SPI.h>
-#include <Adafruit_SSD1306.h>
 #include <Wire.h>
+#include <Adafruit_SSD1306.h>
+#include <Adafruit_GFX.h>
 
-//---Constantes---
-const int flexPin = A0; //Pin de sortie de l'amplificateur
+// --- Constantes Capteur ---
+const int Graphite_sensor = A0;
+const int flex_sensor = A1;
+
 float VCC = 5.0;
-const float R_DIV = 47000.0; //Résistance pour le pont diviseur de tension
-float Rflex_min; //Résistance au repos calibrée
+const float R_DIV = 47000.0;
 
-//---Constantes pour le potentiomètre digital---
-#define MCP_NOP 0b00000000
-#define MCP_WRITE 0b00010001
-#define MCP_SHTDWN 0b00100001
-const int ssMCPin = 8; 
+float R3 = 100000;
+float R5 = 10000;
+float R1 = 100000;
 
-//--- Déclaration de l'état du switch
-bool switchLastState = HIGH; // état précédent du switch pour debounce // état précédent du switch pour debounce
-bool in_menu = HIGH;
+float R_potentiometre = 47000; // pour le flex sensor
+float Rf;
+float Rflex_min;
 
-//---Initialisation de l'écran OLED---
-#define nombreDePixelsEnLargeur 128         // Taille de l'écran OLED, en pixel, au niveau de sa largeur
-#define nombreDePixelsEnHauteur 64          // Taille de l'écran OLED, en pixel, au niveau de sa hauteur
-#define brocheResetOLED         -1          // Reset de l'OLED partagé avec l'Arduino (d'où la valeur à -1, et non un numéro de pin)
-#define adresseI2CecranOLED     0x3C
-Adafruit_SSD1306 ecranOLED(nombreDePixelsEnLargeur, nombreDePixelsEnHauteur, &Wire, brocheResetOLED);
+// choix du capteur
+bool utiliser_graphite = true;
 
-//---Initialisation de l'encodeur rotatoire---
-#define encoder0PinA  2  //CLK Output A Do not use other pin for clock as we are using interrupt
-#define encoder0PinB  4  //DT Output B
-#define Switch 5 // Switch connection if available
-volatile unsigned int encoder0Pos = 0;
-
-
-volatile int menuIndex = 0;
-
-
-
+// --- Variables menu ---
+int condition = 0;
 bool modeChoisi = false;
-int mode = 0; // 0 = calibration, 1 = mesure
-const int NB_CHOIX_MENU = 2; // 0=Calibration, 1=Mesure
+bool switchLastState = HIGH;
 
+// --- Potentiomètre digital ---
+#define MCP_WRITE 0b00010001
+const int ssMCPin = 8;
 
-//Fonction qui lit la tension en sortie de l'amplificateur 
-float  lecture_tension(){
-  float Vadc = analogRead(flexPin);
-  return (Vadc*VCC)/ 1023.0;
+// --- OLED ---
+#define OLED_WIDTH 128
+#define OLED_HEIGHT 64
+#define OLED_RESET -1
+#define adresseI2CecranOLED 0x3C
+Adafruit_SSD1306 ecranOLED(OLED_WIDTH, OLED_HEIGHT, &Wire, OLED_RESET);
+
+// --- Encodeur ---
+#define BUTTON_PIN 5
+#define encoder0PinA 2
+#define encoder0PinB 4
+
+volatile int encoder0Pos = 0;
+
+// lecteur de la tension sur la PINA0 ou PINA1
+float lecture_tension() {
+
+  float Vadc;
+
+  if (utiliser_graphite) {
+    Vadc = analogRead(Graphite_sensor);
+  } else {
+    Vadc = analogRead(flex_sensor);
+  }
+
+  return (Vadc * VCC) / 1023.0;
 }
 
-//Fonction qui lit la résistance du capteur à l'aide d'un pont diviseur de tension
+// Calcul de la résitance -
 float calculateFlexResistance() {
+
   float Vadc = lecture_tension();
-  return R_DIV * (VCC / Vadc - 1.0);
+
+  if (utiliser_graphite) {
+    Rf = ((1 + (R3 / R_potentiometre)) * (VCC / Vadc)) * R1 - R1 - R5; // pour le graphite sensor
+    return Rf;
+  } else {
+    float Rflex = R_DIV * (VCC / Vadc - 1.0); // pour le flex sensor
+    return Rflex;
+  }
 }
 
-void ecriture_potentiometre(uint8_t cmd, uint8_t data, uint8_t ssPin) 
-{
-  SPI.beginTransaction(SPISettings(14000000, MSBFIRST, SPI_MODE0)); 
-  digitalWrite(ssPin, LOW); 
-  SPI.transfer(cmd);        
-  SPI.transfer(data);       
+// angle
+float calculer_angle(){
+
+  if (utiliser_graphite) return 0;
+
+  float current_R = calculateFlexResistance();
+
+  float r_flat = Rflex_min;
+  float r_90 = Rflex_min * 2.5;
+
+  float angle = (current_R - r_flat) * 90 / (r_90 - r_flat);
+
+  if (angle < 0) angle = 0;
+  if (angle > 90) angle = 90;
+
+  return angle;
+}
+
+// ----------------------
+// POTENTIOMETRE
+// ----------------------
+void ecriture_potentiometre(uint8_t cmd, uint8_t data, uint8_t ssPin) {
+  SPI.beginTransaction(SPISettings(14000000, MSBFIRST, SPI_MODE0));
+  digitalWrite(ssPin, LOW);
+  SPI.transfer(cmd);
+  SPI.transfer(data);
   digitalWrite(ssPin, HIGH);
   SPI.endTransaction();
 }
 
-void init_oled() {
+// ----------------------
+// OLED
+// ----------------------
+void affichage_ecran_tension() {
+  float tension = lecture_tension();
+
   ecranOLED.clearDisplay();
+  ecranOLED.setTextSize(2);
   ecranOLED.setCursor(0,0);
-  ecranOLED.setTextSize(1);
-  ecranOLED.println("Bienvenue, calibration en cours");
+  ecranOLED.println("Tension:");
+  ecranOLED.println(tension);
   ecranOLED.display();
-  
 }
 
-void calibration(){
-  float tension_AO = lecture_tension();
-  float tension_cible = 2.5;
-  float tolerance = 0.05;
-  int pos = 128;
-  float diff1;
-  float diff2;
-
-  diff1 = abs((tension_AO-tension_cible));
-
-  do{
-      Serial.println (tension_AO);
-      Serial.println (pos);
-      ecriture_potentiometre(MCP_WRITE, pos, ssMCPin);
-      delay(100);
-      tension_AO = lecture_tension();
-      diff2 = abs((tension_AO-tension_cible));
-
-      if (diff2 > diff1) {
-        if (pos == 255){
-          pos = 1;
-        }
-        else{
-        pos +=1;
-        }
-      }
-      else
-      {
-        if (pos == 0){
-          pos = 254;
-        }
-        else{
-        pos -=1;
-        }
-      }
-      diff1 = abs((tension_AO-tension_cible));
-
-    } while ((tension_AO < 2.4 || tension_AO > 2.6));
-
-  Serial.println ("CALIBRATION: La tension aux bornes de l'amplificateur vaut ");
-  Serial.println (tension_AO);
-  Rflex_min = calculateFlexResistance();
-  Serial.print("Pot calibré pour 0° à la position : ");
-  Serial.println(pos);
-  Serial.print("Resistance au repos : ");
-  Serial.println(Rflex_min);
-}
-
-void affichage_ecran(){
-  float tension;
+void affichage_ecran_resistance() {
+  float resistance = calculateFlexResistance();
 
   ecranOLED.clearDisplay();
-  
-  ecranOLED.setTextSize(2); 
-  ecranOLED.setCursor(0, 0);
-  ecranOLED.println("Tension capteur:"); 
-  ecranOLED.println();
-
-  ecranOLED.setTextSize(2); 
-
-  tension=lecture_tension();
-  ecranOLED.println(tension);
-
+  ecranOLED.setTextSize(2);
+  ecranOLED.setCursor(0,0);
+  ecranOLED.println("Resistance:");
+  ecranOLED.println(resistance);
   ecranOLED.display();
 }
 
-void doEncoder1() {
+void affichage_ecran_angle() {
+  float angle = calculer_angle();
 
-  if (digitalRead(encoder0PinB)==HIGH) {
-    if (encoder0Pos == 30){
-      encoder0Pos = 0;
-    }
-    else{
-    encoder0Pos++;
-    }
-  } else {
-    if (encoder0Pos ==0){
-      encoder0Pos = 30;
-    }
-    else{
-    encoder0Pos--;
-    }
-  }
+  ecranOLED.clearDisplay();
+  ecranOLED.setTextSize(2);
+  ecranOLED.setCursor(0,0);
+  ecranOLED.println("Angle:");
+  ecranOLED.println(angle);
+  ecranOLED.display();
 }
 
-void menu() {
-  //La variable in_menu change d'état à chaque appui sur le switch
-  if (digitalRead(Switch) == LOW) {
-    delay(200);
-    if (in_menu == false) {
-      in_menu = true;
-    } else {
-      in_menu = false;
-    }
-  }
-}
-void doEncoder() {
-  if (digitalRead(encoder0PinB) == HIGH) {
-    if (encoder0Pos == 30) encoder0Pos = 0;
-    else encoder0Pos++;
-  } else {
-    if (encoder0Pos == 0) encoder0Pos = 30;
-    else encoder0Pos--;
-  }
-
-  // Met à jour menuIndex selon la position de l'encodeur
-  // 0-14 = choix 0, 15-30 = choix 1
-  if (encoder0Pos < 15) menuIndex = 0;
-  else menuIndex = 1;
-
-  // Reset timer validation
-  lastMoveTime = millis();
-
-}
-
-
-
+// menu 
 void Afficher_menu() {
 
   ecranOLED.clearDisplay();
   ecranOLED.setTextSize(1);
-  ecranOLED.setCursor(0,0);
 
   ecranOLED.println("Choix du mode:");
   ecranOLED.println();
 
-  if (menuIndex == 0) {
-    ecranOLED.println("> Calibration");
-    ecranOLED.println("  Mesure");
-  } else {
-    ecranOLED.println("  Calibration");
-    ecranOLED.println("> Mesure");
-  }
-
-  ecranOLED.println();
-  ecranOLED.println("Attente validation...");
+  ecranOLED.println(condition==0?"> Tension":"  Tension");
+  ecranOLED.println(condition==1?"> Resistance":"  Resistance");
+  ecranOLED.println(condition==2?"> Angle":"  Angle");
+  ecranOLED.println(condition==3?"> Calibration":"  Calibration");
+  ecranOLED.println(condition==4?"> Capteur":"  Capteur");
 
   ecranOLED.display();
 }
 
+// ----------------------
+// CHOIX CAPTEUR (AJOUT)
+// ----------------------
+void choix_capteur() {
 
+  if (encoder0Pos % 2 == 0) {
+    utiliser_graphite = true;
+  } else {
+    utiliser_graphite = false;
+  }
 
+  ecranOLED.clearDisplay();
+  ecranOLED.setCursor(0,0);
 
-void avant() {
-  float tension;
-  tension=lecture_tension();
-  Serial.println(tension);
-  affichage_ecran();
+  ecranOLED.println("Capteur:");
 
-  Serial.print("Position:");
-  Serial.println (encoder0Pos, DEC);
+  if (utiliser_graphite) {
+    ecranOLED.println("> Graphite");
+    ecranOLED.println("  Flex");
+  } else {
+    ecranOLED.println("  Graphite");
+    ecranOLED.println("> Flex");
+  }
 
-  delay(500);
+  ecranOLED.display();
 }
 
+// ----------------------
+// CALIBRATION (inchangé)
+// ----------------------
+void calibration() {
 
-void setup() {
-  //---Initialisation du potentiomètre---
-  pinMode (ssMCPin, OUTPUT); 
-  digitalWrite(ssMCPin, HIGH);
-  SPI.begin(); 
+  float tension_cible = 2.5;
+  float tension_AO = lecture_tension();
 
-  //---Baud rate---
-  Serial.begin(9600);
+  while (abs(tension_AO - tension_cible) > 0.1) {
 
-  //---Initialisation de l'écran OLED
-  if(!ecranOLED.begin(SSD1306_SWITCHCAPVCC, adresseI2CecranOLED)) {
-    Serial.println(F("Échec de l'initialisation de l'écran OLED"));
-    for(;;);
-    }
-  ecranOLED.setTextColor(SSD1306_WHITE);
-  ecranOLED.setTextWrap(true);
+    ecriture_potentiometre(MCP_WRITE, 128, ssMCPin);
+    delay(200);
 
-  init_oled();
+    tension_AO = lecture_tension();
+  }
 
- 
-  delay(2000);
-
-  //---Initialisation de l'encodeur rotatoire---
-  pinMode(encoder0PinA, INPUT); 
-  digitalWrite(encoder0PinA, HIGH);       
-  pinMode(encoder0PinB, INPUT); 
-  digitalWrite(encoder0PinB, HIGH);     
-  attachInterrupt(0, doEncoder, RISING); 
-
+  Rflex_min = calculateFlexResistance();
 }
 
+// ----------------------
+// BOUTON
+// ----------------------
+void checkButton() {
 
-int lastMenuIndex = -1; // pour détecter un vrai changement de sélection
-void loop() {
-    // Lecture du switch (actif LOW)
-    bool switchState = digitalRead(SWITCH_PIN);
-    if (switchState == LOW && switchLastState == HIGH) { 
-        delay(50); // debounce
-        if (digitalRead(SWITCH_PIN) == LOW) {
-            mode = menuIndex;     // Valider le choix courant
-            modeChoisi = true;
-            ecranOLED.clearDisplay();
-            ecranOLED.setCursor(0,0);
-            ecranOLED.setTextSize(1);
-            if (mode == 0) ecranOLED.println("Mode Calibration choisi");
-            else ecranOLED.println("Mode Mesure choisi");
-            ecranOLED.display();
-            delay(1000);
-        }
-    }
-    switchLastState = switchState;
+  bool switchState = digitalRead(BUTTON_PIN);
 
-    // --- MENU ---
-    if (!modeChoisi) {
-        if (menuIndex != lastMenuIndex) {
-            Afficher_menu();
-            lastMenuIndex = menuIndex;
-        }
-    }
-    // --- MODE CALIBRATION ---
-    else if (mode == 0) {
-        calibration();
-        modeChoisi = false;
-        lastMenuIndex = -1; // reset menu
-    }
-    // --- MODE MESURE ---
-    else if (mode == 1) {
-        affichage_ecran();
-    }
-
+  if (switchState == LOW && switchLastState == HIGH) {
     delay(50);
+
+    if (digitalRead(BUTTON_PIN) == LOW) {
+      modeChoisi = !modeChoisi;
+    }
+  }
+
+  switchLastState = switchState;
+}
+
+// ----------------------
+// ENCODEUR
+// ----------------------
+void doEncoder() {
+  if (digitalRead(encoder0PinA)==HIGH && digitalRead(encoder0PinB)==LOW)
+    encoder0Pos++;
+  else
+    encoder0Pos--;
+}
+
+// ----------------------
+// POSITION MENU
+// ----------------------
+void position_encoder(){
+
+  int pos = encoder0Pos % 5;
+  if (pos < 0) pos += 5;
+
+  condition = pos;
+}
+
+// ----------------------
+// VALIDATION (MODIFIÉ)
+// ----------------------
+void validation_pot(){
+
+  if (modeChoisi == true){
+
+    if (condition == 0)
+      affichage_ecran_tension();
+
+    else if (condition == 1)
+      affichage_ecran_resistance();
+
+    else if (condition == 2)
+      affichage_ecran_angle();
+
+    else if (condition == 3){
+      calibration();
+      modeChoisi = false;
+    }
+
+    else if (condition == 4){
+      choix_capteur();
+    }
+  }
+}
+
+// ----------------------
+// SETUP
+// ----------------------
+void setup() {
+
+  pinMode(BUTTON_PIN, INPUT_PULLUP);
+  pinMode(ssMCPin, OUTPUT);
+
+  SPI.begin();
+
+  pinMode(encoder0PinA, INPUT_PULLUP);
+  pinMode(encoder0PinB, INPUT_PULLUP);
+  attachInterrupt(0, doEncoder, RISING);
+
+  if(!ecranOLED.begin(SSD1306_SWITCHCAPVCC, adresseI2CecranOLED))
+    while(1);
+
+  ecranOLED.setTextColor(SSD1306_WHITE);
+
+  Afficher_menu();
+}
+
+// ----------------------
+// LOOP
+// ----------------------
+void loop() {
+
+  checkButton();
+
+  int ancienneCondition = condition;
+  position_encoder();
+
+  if (condition != ancienneCondition) {
+    Afficher_menu();
+  }
+
+  validation_pot();
+
+  delay(100);
 }

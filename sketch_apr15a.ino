@@ -14,14 +14,21 @@ float R5 = 10000;
 float R1 = 100000;
 float R_potentiometre;
 float Rf; //Résistance globale 
-int pos = 250;
+int pos = 128;
 float Rflex_min;
 float value_flex;
 
+//---Communication bluetooth---
+#include <SoftwareSerial.h>
+#define rxPin 9 //Broche 9
+#define txPin 10 //Broche 10 
+#define baudrate 9600
+SoftwareSerial mySerial(rxPin ,txPin); 
 
 int condition = 0;
 int etat_bouton = 0;
 int fin_calib = 0;
+
 
 // --- Potentiomètre digital ---
 #define MCP_NOP     0b00000000
@@ -47,30 +54,78 @@ volatile int encoder0Pos = 1;
 int menuIndex = 0;        // 0=Calibration, 1=Mesure, 2=mesure2
 bool modeChoisi = false;  // true si appui pour valider
 bool switchLastState = HIGH;
+int x_graph = 0;
 
-// --- Fonctions Capteur ---
+// choix du capteur
+bool cond_capteur = true; //True = capteur graphite et False = Flex sensor
+char capt[30];
+
+// -Lecture tension 
 float lecture_tension() {
-  float Vadc = analogRead(flexPin);
+  float Vadc;
+  if (cond_capteur){
+    Vadc = analogRead(Graphite_sensor);
+  }
+  else{
+    Vadc = analogRead(flex_sensor);
+  }
   return (Vadc * VCC) / 1023.0;
 }
 
 
+
 float calculateFlexResistance() {
   float Vadc = lecture_tension();
-  float R_potentiometre = R_DIV * (VCC / Vadc - 1.0);
 
-  Rf = ((1+(R3 / R_potentiometre))*(VCC/Vadc))*R1-R1-R5;
-  return Rf;
+  // calcul de la resistance en fonction du capteur choisi
+   if (cond_capteur){
+    Rf = ((1 + (R3 / R_potentiometre)) * (VCC / Vadc)) * R1 - R1 - R5;
+    return Rf;
+  }
+  else{
+    float Rflex = R_DIV * (VCC / Vadc - 1.0); // pour le flex sensor
+    return Rflex;
+  }
+  
+}
+// angle
+
+float calculer_angle(){
+
+  if (cond_capteur) {
+  return 0;
+  }
+  else{
+  float current_R = calculateFlexResistance();
+
+  float r_flat = Rflex_min;
+  float r_90 = Rflex_min * 2.5;
+
+  float angle = map(current_R, r_flat, r_90, 0.0, 90.0);
+
+  if (angle < 0) angle = 0;
+  if (angle > 90) angle = 90;
+
+  return angle;}
 }
 
-float flex_sensor(){
-  value_flex = analogRead(Graphite_sensor)
-  V_flex = value_flex * Vadc/1023.0
-  resitance_flex = R * V_flex/(Vadc-V_flex)
+//---Variables globales---
+float tension = lecture_tension();
+float resistance = calculateFlexResistance();
+float angle = calculer_angle();
+
+void changement_capteur(){
+  if (cond_capteur == true){
+    strcpy(capt, "Capteur graphite");
+  }
+  else{
+  
+    strcpy(capt, "Flex sensor");
+   
+}
 }
 
-
-
+// potentiometre
 void ecriture_potentiometre(uint8_t cmd, uint8_t data, uint8_t ssPin) {
   SPI.beginTransaction(SPISettings(14000000, MSBFIRST, SPI_MODE0));
   digitalWrite(ssPin, LOW);
@@ -91,6 +146,7 @@ void init_oled() {
 }
 
 void oled_calibration() {
+  if (cond_capteur = true){
   float tension_AO;
   ecranOLED.clearDisplay();
   ecranOLED.setCursor(0,0);
@@ -111,40 +167,87 @@ void oled_calibration() {
     ecranOLED.println(F("Resistance au repos: "));
     ecranOLED.print(Rf);
     
+  }}
+  else{
+    ecranOLED.clearDisplay();
+    ecranOLED.setCursor(0,0);
+    ecranOLED.setTextSize(1);
+    ecranOLED.println(F("La calibration n'est pas nécessaire pour le flex sensor."));
   }
   ecranOLED.display();
 }
 
 void affichage_ecran_tension() {
-  float tension = lecture_tension();
+  
   ecranOLED.clearDisplay();
-  ecranOLED.setTextSize(2);
+  ecranOLED.setTextSize(1);
   ecranOLED.setCursor(0,0);
   ecranOLED.println(F("Tension capteur:"));
   ecranOLED.println();
   ecranOLED.println(tension);
+
+  if (cond_capteur == true){
+   ecranOLED.setCursor(32, 56);
+   ecranOLED.println(F("Capteur graphite"));
+  }
+  else{
+    ecranOLED.setCursor(62, 56);
+    ecranOLED.println(F("Flex sensor"));
+  }
+
   ecranOLED.display();
 }
 
 void affichage_ecran_resistance() {
-  float resistance = calculateFlexResistance();
+  
   ecranOLED.clearDisplay();
-  ecranOLED.setTextSize(2);
+  ecranOLED.setTextSize(1);
   ecranOLED.setCursor(0,0);
   ecranOLED.println(F("Résistance capteur:"));
   ecranOLED.println();
   ecranOLED.println(resistance);
+
+  if (cond_capteur == true){
+   ecranOLED.setCursor(32, 56);
+   ecranOLED.println(F("Capteur graphite"));
+  }
+  else{
+    ecranOLED.setCursor(62, 56);
+    ecranOLED.println(F("Flex sensor"));
+  }
+
   ecranOLED.display();
 }
 
 void affichage_ecran_angle() {
-  float angle = calculer_angle();
+  
   ecranOLED.clearDisplay();
-  ecranOLED.setTextSize(2);
+  ecranOLED.setTextSize(1);
   ecranOLED.setCursor(0,0);
   ecranOLED.println(F("Angle capteur:"));
   ecranOLED.println();
   ecranOLED.println(angle);
+
+  if (cond_capteur == true){
+   ecranOLED.setCursor(32, 56);
+   ecranOLED.println(F("Capteur graphite"));
+  }
+  else{
+    ecranOLED.setCursor(62, 56);
+    ecranOLED.println(F("Flex sensor"));
+  }
+  
+  ecranOLED.display();
+}
+
+void afficher_capteur() {
+  changement_capteur();
+  ecranOLED.clearDisplay();
+  ecranOLED.setTextSize(1);
+  ecranOLED.setCursor(0,0);
+  ecranOLED.println(F("Capteur:"));
+  ecranOLED.println();
+  ecranOLED.println(capt);
   ecranOLED.display();
 }
 
@@ -155,16 +258,33 @@ void Afficher_menu() {
   ecranOLED.setCursor(0,0);
   ecranOLED.println(F("Choix du mode:"));
   ecranOLED.println();
+
   if(condition == 0) ecranOLED.println(F("> Tension"));
   else ecranOLED.println(F("  Tension"));
+
   if(condition == 1) ecranOLED.println(F("> Resistance"));
   else ecranOLED.println(F("  Resistance"));
+
   if(condition == 2) ecranOLED.println(F("> Angle"));
   else ecranOLED.println(F("  Angle"));
+
   if(condition == 3) ecranOLED.println(F("> Calibration"));
   else ecranOLED.println(F("  Calibration"));
-  ecranOLED.println();
-  ecranOLED.println(F("Appuyez pour valider"));
+
+  if(condition == 4) ecranOLED.println(F("> Capteur"));
+  else ecranOLED.println(F("  Capteur"));
+
+
+
+  if (cond_capteur == true){
+   ecranOLED.setCursor(32, 56);
+   ecranOLED.println(F("Capteur graphite"));
+  }
+  else{
+    ecranOLED.setCursor(62, 56);
+    ecranOLED.println(F("Flex sensor"));
+  }
+
   ecranOLED.display();
 }
 
@@ -211,18 +331,7 @@ void calibration() {
   Serial.println(Rflex_min);
 }
 
-float calculer_angle(){
-  float current_R = calculateFlexResistance();
-  float r_flat = Rflex_min; // angle pendant la calibration
-  float r_90 = Rflex_min * 2.5;
-  float angle1 = (current_R - r_flat) * 90 / (r_90 - r_flat);
-  float angle = map(current_R, r_flat, r_90, 0.0, 90.0);
 
-  if ( angle < 0) angle = 0;
-  if (angle > 90) angle = 90;
-
-  return angle;
-}
 
 // --- Bouton du potentiometre  ---
 void checkButton() {
@@ -235,10 +344,8 @@ void checkButton() {
     if (digitalRead(BUTTON_PIN) == LOW) {
 
       if (modeChoisi == false) {
-        // 👉 entrer dans un mode
         modeChoisi = true;
       } else {
-        // 👉 sortir du mode → retour menu
         modeChoisi = false;
         Afficher_menu();
       }
@@ -248,36 +355,78 @@ void checkButton() {
 
   switchLastState = switchState;
 }
+
+
+
 void validation_pot() {
   if (modeChoisi == true) {
 
     if (condition == 0) {
+      do{
+      tension = lecture_tension();
       affichage_ecran_tension();
+      loop_bluetooth(tension);
+      delay(50);
+      checkButton();
+      position_encoder(); 
+      if (modeChoisi == false) break;
+      }while(condition == 0);
+      
     }
     else if (condition == 1) {
+      do{
+      resistance = calculateFlexResistance();
       affichage_ecran_resistance();
+      loop_bluetooth(resistance);
+      delay(50);
+      checkButton();
+      position_encoder(); 
+      if (modeChoisi == false) break;
+      }while(condition == 1);
     }
     else if (condition == 2) {
+      do{
+      angle = calculer_angle();
       affichage_ecran_angle();
+      loop_bluetooth(angle);
+      delay(50);
+      checkButton();
+      position_encoder(); 
+      if (modeChoisi == false) break;
+      }while(condition == 2);
     }
     else if (condition == 3) {
+      do{
       oled_calibration();
       calibration();
       oled_calibration();
-
-      modeChoisi = false;
-      Afficher_menu();
+      checkButton();
+      if (modeChoisi == false) break;
+      }while(condition == 3);
     }
-
+    else if (condition == 4){
+      if (cond_capteur==true){
+        cond_capteur = false;
+      }
+      else {
+        cond_capteur = true;
+      }
+      do{
+      afficher_capteur();
+      checkButton();
+      if (modeChoisi == false) break;
+      }while(condition == 4);
+   
+      }
+}
+}
     
     //if (condition != 0 && condition != 1 && condition != 2 && condition != 3) {
       //modeChoisi = false;
       //Afficher_menu();
    // }
-  }
-}
 
-
+// plus utilisé
 
 void validation_pot2(){
    if (modeChoisi == true){
@@ -292,21 +441,21 @@ void validation_pot2(){
       
       do{
       affichage_ecran_resistance();
-      }while(condition == 0);
+      }while(condition == 1);
     }
     if (condition == 2){
       //fonction angle
       do{
       affichage_ecran_angle();
-      }while(condition == 0);
+      }while(condition == 2);
     }
     if (condition == 3){
-      //fonction angle
+      //fonction calibration
       do{
       oled_calibration();
       calibration();
       oled_calibration();
-      }while(condition == 0);
+      }while(condition == 3);
       
     }
     modeChoisi = false;
@@ -322,6 +471,7 @@ void encoder_setup(){
 
   attachInterrupt(0, doEncoder, RISING); 
 }
+
 
 void doEncoder() {
   if (digitalRead(encoder0PinA)==HIGH && digitalRead(encoder0PinB)==HIGH) {
@@ -339,20 +489,43 @@ void doEncoder() {
 }
 
 void position_encoder(){
-  if ((encoder0Pos<=7 && 0 <encoder0Pos)){
+  if ((encoder0Pos<=6 && 0 <encoder0Pos)){
     condition = 0;
   }
-  else if ((encoder0Pos<=14 && 7<encoder0Pos)){
+  else if ((encoder0Pos<=12 && 6<encoder0Pos)){
     condition = 1;
   }
-  else if ((encoder0Pos<=21 && 14<encoder0Pos)){
+  else if ((encoder0Pos<=20 && 12<encoder0Pos)){
     condition = 2;
   }
-  else if ((encoder0Pos<=28 && 21<encoder0Pos)){
-    condition = 3;
+  else if ((encoder0Pos<=26 && 20<encoder0Pos)){
+    condition = 3; //calibration
   }
+   else if ((encoder0Pos<=60 && 26<encoder0Pos)){
+    condition = 4; //capteur
+  } 
   //Serial.println("Condition:");
   //Serial.println(condition);
+}
+
+//---Communication bluetooth---
+void setup_bluetooth(){
+  pinMode(rxPin,INPUT);
+  pinMode(txPin,OUTPUT);
+    
+  mySerial.begin(baudrate);
+}
+
+
+
+void loop_bluetooth(float variable){
+  
+  mySerial.print(variable);
+  mySerial.print(",");
+  mySerial.print(condition);
+  mySerial.print(",");
+  mySerial.print(cond_capteur ? 1 : 0); //envoie 1 si true et 0 si false
+  mySerial.print("\n");
 }
 
 
@@ -375,6 +548,7 @@ void setup() {
   delay(1000);
   oled_calibration();
   //calibration();
+  setup_bluetooth();
   pinMode(BUTTON_PIN, INPUT_PULLUP);
   Afficher_menu();
   Serial.println("Calibration terminée");
@@ -383,7 +557,6 @@ void setup() {
 // --- Loop ---
 void loop() {
   checkButton();
-
   
 
   int ancienneCondition = condition;
@@ -394,8 +567,6 @@ void loop() {
   }
 
   validation_pot();
-
-  
 
   delay(100);
 }

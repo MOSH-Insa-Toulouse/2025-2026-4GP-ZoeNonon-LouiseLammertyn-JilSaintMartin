@@ -146,3 +146,41 @@ Perte de contacte soudure
 Kicad mauvais branchemement
 
 
+
+//Bluetooth
+#include <SoftwareSerial.h>
+#define rxPin 0 // Correspondant à la broche tx du module bluetooth
+#define txPin 1 // Correspondant à la broche Rx du module bluetooth
+#define baudrate 9600 
+SoftwareSerial mySerial(rxPin ,txPin); //Definition du software serial
+
+// --- FONCTION D'ENVOI BLUETOOTH ---
+void envoyerDonneeBluetooth(float valeur) { // <--- AJOUT BLUETOOTH
+  // Ton appli attend un "Unsigned 1 Byte Number" (0-255)
+  // On mappe la valeur pour qu'elle rentre dans un octet si nécessaire
+  // Ici on envoie la valeur brute/4 ou une valeur d'angle
+  byte aEnvoyer = (byte)constrain(valeur, 0, 255); 
+  mySerial.write(aEnvoyer); 
+}
+
+
+// OLED
+void affichage_ecran_tension() {
+  float tension = lecture_tension();
+  envoyerDonneeBluetooth(tension * 50); // <--- AJOUT BLUETOOTH (ex: 2.5V -> 125)
+
+  void affichage_ecran_resistance() {
+  float resistance = calculateFlexResistance();
+  // On divise la résistance par un facteur pour que l'appli puisse l'afficher (0-255)
+  envoyerDonneeBluetooth(resistance / 1000); // <--- AJOUT BLUETOOTH
+
+  void affichage_ecran_angle() {
+  float angle = calculer_angle();
+  envoyerDonneeBluetooth(angle); // <--- AJOUT BLUETOOTH (0-90 deg)
+
+  void setup() {
+  mySerial.begin(9600); // <--- AJOUT BLUETOOTH
+
+
+
+
