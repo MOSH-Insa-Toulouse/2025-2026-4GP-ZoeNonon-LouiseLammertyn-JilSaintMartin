@@ -152,18 +152,8 @@ La résistance relative est définie par :
 
 ### Résulat
 Nous avons obtenu les courbes suivantes :
-
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.85\textwidth]{resultat_flexion.png}
-\caption{Response of the graphite strain sensor under bending}
-\end{figure}
-
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.85\textwidth]{Résultat_compression.png}
-\caption{Response of the graphite strain sensor under compression}
-\end{figure}
+<img width="2827" height="1425" alt="Résultat_compression" src="https://github.com/user-attachments/assets/d60e430e-702e-48a4-a128-1575c572bf66" /> 
+<img width="3167" height="1595" alt="resultat_flexion" src="https://github.com/user-attachments/assets/cd6efece-dfbd-4445-902f-7a0a0d65fcdf" />
 
 On observe que les résultats obtenus en flexion présentent une relation globalement linéaire entre la déformation et la variation de résistance. Le capteur est donc particulièrement adapté à la mesure de flexion. Cependant la durée de vie du capteur est courte 
 les valeurs sont tres vraibale lorsque que celui ci a deja été pliée.
