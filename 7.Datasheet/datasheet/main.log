@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2026.3.2)  16 APR 2026 16:26
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2026.3.2)  16 APR 2026 16:59
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -415,13 +415,13 @@ Package pdftex.def Info: mesure.png  used on input line 188.
 <resultat_flexion.png, id=21, 693.573pt x 349.305pt>
 File: resultat_flexion.png Graphic file (type png)
 <use resultat_flexion.png>
-Package pdftex.def Info: resultat_flexion.png  used on input line 211.
-(pdftex.def)             Requested size: 252.11194pt x 126.97026pt.
+Package pdftex.def Info: resultat_flexion.png  used on input line 209.
+(pdftex.def)             Requested size: 472.71088pt x 238.07323pt.
 <Résultat_compression.png, id=22, 619.113pt x 312.075pt>
 File: Résultat_compression.png Graphic file (type png)
 <use Résultat_compression.png>
-Package pdftex.def Info: Résultat_compression.png  used on input line 217.
-(pdftex.def)             Requested size: 252.11194pt x 127.08014pt.
+Package pdftex.def Info: Résultat_compression.png  used on input line 214.
+(pdftex.def)             Requested size: 472.71088pt x 238.2842pt.
 
 
 
@@ -449,13 +449,13 @@ L3 programming layer <2025-01-18>
 Here is how much of TeX's memory you used:
  9342 strings out of 473190
  218405 string characters out of 5715801
- 579417 words of memory out of 5000000
+ 579411 words of memory out of 5000000
  32487 multiletter control sequences out of 15000+600000
  593031 words of font info for 57 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  86i,11n,93p,454b,650s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2025/texmf-dist/fonts/type1/public/libertine/LinBiolinumT.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/libertine/LinBiolinumTB.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/libertine/LinLibertineT.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb>
-Output written on main.pdf (3 pages, 1569002 bytes).
+Output written on main.pdf (3 pages, 1568678 bytes).
 PDF statistics:
  75 PDF objects out of 1000 (max. 8388607)
  38 compressed objects within 1 object stream
