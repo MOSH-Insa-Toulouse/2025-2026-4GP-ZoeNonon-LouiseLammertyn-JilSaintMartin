@@ -145,9 +145,6 @@ Pour consulter les différents fichiers, aller à [3.KiCad](https://github.com/M
 Une fois le routage validé sous KiCad et le fichier de perçage généré, nous avons pu imprimer notre circuit électronique (merci Cathy <3). Ensuite, nous avons percé et soudé le montage complet. Avant de passer au code Arduino, nous avons vérifié que tout fonctionnait bien à l'aide d'un multimètre, en effectuant les étapes suivantes:
 - Vérification que chaque piste relie bien les bons points du schéma.
 - Absence totale de court-circuit entre le 5V et le GND.
- 
-<img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/c728011d-2ce3-461f-a145-05f94b24305f" />
-<img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/a1ab8def-40c3-416e-80f5-0c1f6ff07c94" />
 
 ### Arduino
 Il a ensuite été nécessaire de réaliser un code arduino afin de pouvoir contrôler la carte. Ce code permet notamment d'effectuer les mesures sur le capteur graphite et de contrôler les différents composants tels que le module bluetooth, l'écran OLED et l'encodeur rotatoire. 
@@ -160,15 +157,34 @@ Une fonction de calibration a aussi été créee afin de calibrer la tension aux
 
 Notre montage permet aussi d'utiliser un flexor commercial. Pour cela, une fonction au sein du code permet de mesurer la tension différement et d'en déduire la résistance. La calibration n'est cependant pas nécessaire sur ce capteur. 
 
+
+<p align="center">
+  <img width="1236" height="2812" alt="Flexor" src="https://github.com/user-attachments/assets/aa4db0c4-3b84-4619-b7e6-af96fb5bf3de" />
+</p>
+<p align="center">
+  <em>Flexor commercial</em>
+</p>
+
 La lecture de tension aux bornes du capteur graphite ou du flexor commercial s'effectue toutes les 100ms. 
 
 **Composants pour l'utilisateur**
+<p align="center">
+  <img width="852" height="647" alt="Schéma_composants" src="https://github.com/user-attachments/assets/c32d6844-e4c0-4008-b94f-47c23bf2a484" />
+</p>
+<p align="center">
+  <em>Schéma des différents composants</em>
+</p>
 
 Le reste du code permet de gérer le reste des composants. Une fonction permet de gérer l'affichage sur l'écran OLED. Sur cet écran, l'affichage d'un menu permet d'intéragir avec l'utilisateur. Une fonction gère l'encodeur rotatoire qui permet à l'utilisateur de se déplacer sur le menu. Enfin, une dernière fonction permet d'envoyer les données mesurées à l'aide du module bluetooth sur un téléphone connecté. 
 
-Pour consulter les différents fichiers, aller à [4.Arduino](https://github.com/MOSH-Insa-Toulouse/2025-2026-4GP-ZoeNonon-LouiseLammertyn-JilSaintMartin/tree/main/4.Arduino)
+<p align="center">
+  <img width="822" height="634" alt="Menu" src="https://github.com/user-attachments/assets/2f5d6a8d-2e0d-4d96-b905-f57ed69e53e4" />
+</p>
+<p align="center">
+  <em>Menu affiché sur l'écran OLED</em>
+</p>
 
-  <img width="3024" height="4032" alt="menu" src="https://github.com/user-attachments/assets/2fc0c662-b7a5-4879-86e9-17c6febe129d" />
+Pour consulter les différents fichiers, aller à [4.Arduino](https://github.com/MOSH-Insa-Toulouse/2025-2026-4GP-ZoeNonon-LouiseLammertyn-JilSaintMartin/tree/main/4.Arduino)
 
 ### Application
 Aller à [5.Application](https://github.com/MOSH-Insa-Toulouse/2025-2026-4GP-ZoeNonon-LouiseLammertyn-JilSaintMartin/tree/main/5.Application)
