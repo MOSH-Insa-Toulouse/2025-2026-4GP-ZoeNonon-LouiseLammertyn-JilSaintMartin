@@ -289,5 +289,5 @@ Cependant, la durée de vie du capteur est courte ce qui le rend peut réutilisa
 Pour conclure, ce capteur graphite est commercialisable à condition de pouvoir augmenter sa durée de vie. On pourrait par exemple proposer l'ajout d'une couche de protection sur le capteur afin d'éviter d'enlever du graphite ainsi que d'utiliser un papier moins fragile. 
 
 <p align="center">
-  <em>GraphiFlop c'est validé! 😎👍</em>
+  <strong>GraphiFlop c'est validé! 😎👍</strong>
 </p>
