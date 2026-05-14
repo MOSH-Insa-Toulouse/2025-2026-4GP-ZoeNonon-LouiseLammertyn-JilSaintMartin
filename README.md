@@ -221,24 +221,30 @@ L'application permet par ailleurs d'afficher le mode de mesure en cours (mesure 
 Pour consulter les différents fichiers, aller à [5.Application](https://github.com/MOSH-Insa-Toulouse/2025-2026-4GP-ZoeNonon-LouiseLammertyn-JilSaintMartin/tree/main/5.Application)
 
 ### Banc de tests
-Pour consulter les différents fichiers, aller à [6.Banc de tests](https://github.com/MOSH-Insa-Toulouse/2025-2026-4GP-ZoeNonon-LouiseLammertyn-JilSaintMartin/tree/main/6.Banc%20de%20tests)
-
 Pour cette partie, nous avons utilisé un banc de test conçu par les groupes précédents.
-Afin de vérifier les résultats obtenus, nous avons tracé la variation relative de la résistance en fonction de la déformation mécanique. La résistance relative est mesurée pour chaque courbure appliquée au banc de test.
+<p align="center">
+  <img width="102.5" height="281.4" alt="banc_test_sans_fond" src="https://github.com/user-attachments/assets/921c20a9-a0e7-4cd9-9ac0-dcb9949366b6" />
+</p>
+<p align="center">
+  <em>Banc de test</em>
+</p>
+
+Afin de vérifier les résultats obtenus, nous avons tracé la variation relative de la résistance du capteur en fonction de la déformation mécanique. La résistance relative est mesurée pour chaque courbure du banc de test.
 La déformation peut être calculée à partir de la géométrie du dispositif selon la relation suivante :
 
 <p align="center">
 <img width="195" height="77" alt="deformation" src="https://github.com/user-attachments/assets/36a6837b-f27e-4d52-a047-6e39a1ebdb71" />
 </p>
 
- Ensuite, à l’aide du code Arduino, nous avons mesuré la résistance pour quatre types de crayons. Une mesure de référence à plat a d’abord été réalisée, puis des mesures ont été effectuées pour différentes courbures du banc de test, en compression et en tension.
+Ensuite, à l’aide du code arduino, nous avons mesuré la résistance du capteur pour quatre types de crayons différents. Une mesure de référence à plat a d’abord été réalisée, puis des mesures ont été effectuées pour différentes courbures du banc de test, en compression et en tension.
 La résistance relative est définie par :
 
  <p align="center">
 <img width="218" height="77" alt="Rrelative" src="https://github.com/user-attachments/assets/a958a8b9-3cbb-4617-836b-28bab4d56c62" />
 </p>
 
-### Résulat
+Pour consulter les différents fichiers, aller à [6.Banc de tests](https://github.com/MOSH-Insa-Toulouse/2025-2026-4GP-ZoeNonon-LouiseLammertyn-JilSaintMartin/tree/main/6.Banc%20de%20tests)
+### Résulats
 Nous avons obtenu les courbes suivantes :
 
 <p align="center">
@@ -246,8 +252,7 @@ Nous avons obtenu les courbes suivantes :
 <img width="3167" height="1595" alt="resultat_flexion" src="https://github.com/user-attachments/assets/cd6efece-dfbd-4445-902f-7a0a0d65fcdf" />
 </p>
 
-On observe que les résultats obtenus en flexion présentent une relation globalement linéaire entre la déformation et la variation de résistance. Le capteur est donc particulièrement adapté à la mesure de flexion. Cependant la durée de vie du capteur est courte 
-les valeurs sont tres vraibale lorsque que celui ci a deja été pliée.
+On observe que les résultats obtenus en flexion présentent une relation globalement linéaire entre la déformation et la variation de résistance. Le capteur est donc particulièrement adapté à la mesure de flexion. Cependant la durée de vie du capteur est courte les valeurs sont tres vraibale lorsque que celui ci a deja été pliée. 
 On retrouve bien les résultats attendus concernant la sensibilité du capteur en fonction du grade du crayon. Les crayons "tendres" (ex : 6B, à forte concentration en graphite) présentent une sensibilité plus faible que les crayons plus "durs" (ex : HB). 
 
 Cela s’explique par la structure du réseau conducteur : une plus forte densité de graphite rend le chemin de conduction plus stable, ce qui réduit l’amplitude relative des variations de résistance lors des déformations.
@@ -259,49 +264,30 @@ Enfin, nous n’avons pas réussi à obtenir de mesures exploitables avec les cr
 
 Pour consulter les différents fichiers, aller à [7.Datasheet](https://github.com/MOSH-Insa-Toulouse/2025-2026-4GP-ZoeNonon-LouiseLammertyn-JilSaintMartin/tree/main/7.Datasheet)
 
-### Conclusion (répondre à la question: est ce que ce capteur peut remplacer un flexeur?)
-
 ### Erreur rencontré
-RAM -> ecran oled
-Perte de contacte soudure
-Kicad mauvais branchemement
+Au cours de ce projet, de nombreuse erreurs ont été rencontrées, que nous détaillons ci-dessous. 
 
+Les premiers problèmes rencontrés sont liés à une erreur de routage sur KiCad. En effet, nous avons vite remarqué que certains composants n'étaient pas reliés au bonnes pins de l'arduino comme par exemple le potentiomètre numérique. Nous avons aussi oublié d'ajouter sur le PCB initial des broches afin de connecter le flexor commercial ou bien une capacité associée à l'encodeur rotatoire. Nous avons cependant pu remédier à ces erreurs en ressoudant avec des fils certaines pistes du PCB (encore merci Cathy :)).
 
+<p align="center">
+  <img width="194.1" height="184.1" alt="Face_arrière_PCB_avec_fils_sans_fond" src="https://github.com/user-attachments/assets/6b528811-3c84-4337-9aaa-cb6aa663b2aa" />
+</p>
+<p align="center">
+  <em>Face arrière du PCB (après réparation)</em>
+</p>
 
-//Bluetooth
-#include <SoftwareSerial.h>
-#define rxPin 0 // Correspondant à la broche tx du module bluetooth
-#define txPin 1 // Correspondant à la broche Rx du module bluetooth
-#define baudrate 9600 
-SoftwareSerial mySerial(rxPin ,txPin); //Definition du software serial
+Nous avons aussi rencontré des problèmes quant aux codes écrits lors de ce projet. En effet, nous avons fait face à des problèmes de RAM de l'écran OLED. Nous avons pu cependant régler ce problème. Par ailleurs, nous avons aussi eu des difficultés face à la fonction de calibration qui ne fonctionne pas toujours ou bien face à certaines boucles de l'application ANDROID qui ne sont pas toujours lues. Nous n'avons malheureusement pas pu remédier à ces problèmes. 
 
-// --- FONCTION D'ENVOI BLUETOOTH ---
-void envoyerDonneeBluetooth(float valeur) { // <--- AJOUT BLUETOOTH
-  // Ton appli attend un "Unsigned 1 Byte Number" (0-255)
-  // On mappe la valeur pour qu'elle rentre dans un octet si nécessaire
-  // Ici on envoie la valeur brute/4 ou une valeur d'angle
-  byte aEnvoyer = (byte)constrain(valeur, 0, 255); 
-  mySerial.write(aEnvoyer); 
-}
+Enfin, nous avons rencontré des difficultés quant au capteur en lui-même. Le capteur graphite a, comme expliqué précédemment, une durée de vie assez courte ce qui rend difficile certaines mesures.
 
+### Conclusion
+Ce capteur est fiable comme le montre les courbes réalisées. Il permet d'effectuer des mesurer tant en flexion qu'en compression (ce qui n'est pas le cas pour un flexor commercial) avec une sensibilité certaine. 
+Un avantage considérable du capteur graphite est son prix très bas en comparaison d'un capteur commercial. 
 
-// OLED
-void affichage_ecran_tension() {
-  float tension = lecture_tension();
-  envoyerDonneeBluetooth(tension * 50); // <--- AJOUT BLUETOOTH (ex: 2.5V -> 125)
+Cependant, la durée de vie du capteur est courte ce qui le rend peut réutilisable. 
 
-  void affichage_ecran_resistance() {
-  float resistance = calculateFlexResistance();
-  // On divise la résistance par un facteur pour que l'appli puisse l'afficher (0-255)
-  envoyerDonneeBluetooth(resistance / 1000); // <--- AJOUT BLUETOOTH
+Pour conclure, ce capteur graphite est commercialisable à condition de pouvoir augmenter sa durée de vie. On pourrait par exemple proposer l'ajout d'une couche de protection sur le capteur afin d'éviter d'enlever du graphite ainsi que d'utiliser un papier moins fragile. 
 
-  void affichage_ecran_angle() {
-  float angle = calculer_angle();
-  envoyerDonneeBluetooth(angle); // <--- AJOUT BLUETOOTH (0-90 deg)
-
-  void setup() {
-  mySerial.begin(9600); // <--- AJOUT BLUETOOTH
-
-
-
-
+<p align="center">
+  <em>GraphiFlop c'est validé! 😎👍</em>
+</p>
