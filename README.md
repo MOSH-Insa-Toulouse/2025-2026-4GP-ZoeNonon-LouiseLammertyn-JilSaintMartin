@@ -7,17 +7,7 @@ Dans le cadre de la formation en Génie Physique de l'INSA Toulouse, les étudia
   <strong>Un capteur graphite low-tech peut-il remplacer un flexeur commercial ?</strong>
 </p>
 
-<table>
-<tr>
-<td bgcolor="yellow">
-
-Texte avec fond jaune
-
-</td>
-</tr>
-</table>
-
-Ce capteur low-tech se base sur les travaux de
+Ce capteur graphitte se base sur les travaux de:
 
   - [1]	K.-H. Müller, J. Herrmann, B. Raguse, G. Baxter, and T. Reda, “Percolation model for electron conduction in films of metal nanoparticles linked by organic molecules,” Phys. Rev. B, vol. 66, no. 7, p. 075417, Aug. 2002, doi: 10.1103/PhysRevB.66.075417.
   
@@ -144,7 +134,13 @@ Enfin, KiCad permet une modélisation 3D du projet. Cet outil nous a permis de:
 Pour consulter les différents fichiers, aller à [3.KiCad](https://github.com/MOSH-Insa-Toulouse/2025-2026-4GP-ZoeNonon-LouiseLammertyn-JilSaintMartin/tree/main/3.KiCad)
 
 ### Fabrication PCB et soudage
-<img width="423" height="370" alt="image" src="https://github.com/user-attachments/assets/f2a7d98e-83db-400a-ab24-7c4c89ce1e0a" />
+
+<p align="center">
+  <img width="423" height="370" alt="image" src="https://github.com/user-attachments/assets/f2a7d98e-83db-400a-ab24-7c4c89ce1e0a" />
+</p>
+<p align="center">
+  <em>Fichier généré par KiCad pour l'impression du PCB</em>
+</p>
 
 Une fois le routage validé sous KiCad et le fichier de perçage généré, nous avons pu imprimer notre circuit électronique (merci Cathy <3). Ensuite, nous avons percé et soudé le montage complet. Avant de passer au code Arduino, nous avons vérifié que tout fonctionnait bien à l'aide d'un multimètre, en effectuant les étapes suivantes:
 - Vérification que chaque piste relie bien les bons points du schéma.
