@@ -97,9 +97,11 @@ Le passage au routage permet de définir la disposition physique des éléments 
 - Placement des composants et routages: Nous avons disposé les composants afin de pouvoir router par la suite le plus efficacement possible, sans que les composants et les pistes ne se superposent.
 - Plan de masse: Un plan de masse a été intégré pour stabiliser les potentiels et réduire le bruit sur le circuit analogique.
 
+<p align="center">
 <img width="755" height="602" alt="pcb" src="https://github.com/user-attachments/assets/fbcbb2ab-9b43-4ea8-ba69-89117455dc1d" />  
 
 *Visualisation du routage sur KiCad*
+</p>
 
 **Visualisation 3D et vérification**
 
