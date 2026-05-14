@@ -84,6 +84,7 @@ Pour ce faire, nous utilisons la suite logicielle KiCad.
 Cette phase de conception se décompose en trois étapes majeures :
 
 **Saisie schématique et empreinte**
+
 La première étape consiste à reproduire le circuit de l’amplificateur transimpédance.
 - Intégration des composants: Nous y plaçons l'AOP LTC1050, les composants passifs (résistances, condensateurs) et les connecteurs nécessaires à l'Arduino Uno, l'écran OLED et l'encodeur rotatif.
 - Association des empreintes: Chaque symbole schématique est lié à une empreinte physique réelle. Cette étape est cruciale pour assurer que les composants pourront être soudés correctement sur le cricuit final.
@@ -91,13 +92,15 @@ La première étape consiste à reproduire le circuit de l’amplificateur trans
 <img width="852" height="602" alt="shm" src="https://github.com/user-attachments/assets/e6f07f1a-847f-4858-b204-001d56c1e0d7" />
 
 **Routage et placement**
+
 Le passage au routage permet de définir la disposition physique des éléments sur la carte de cuivre.
 - Placement des composants et routages: Nous avons disposé les composants afin de pouvoir router par la suite le plus efficacement possible, sans que les composants et les pistes ne se superposent.
 - Plan de masse: Un plan de masse a été intégré pour stabiliser les potentiels et réduire le bruit sur le circuit analogique.
 
-<img width="755" height="602" alt="pcb" src="https://github.com/user-attachments/assets/fbcbb2ab-9b43-4ea8-ba69-89117455dc1d" />
+<img width="755" height="602" alt="pcb" src="https://github.com/user-attachments/assets/fbcbb2ab-9b43-4ea8-ba69-89117455dc1d" />  *Visualisation du routage sur KiCad*
 
 **Visualisation 3D et vérification**
+
 Enfin, KiCad permet une modélisation 3D du projet. Cet outil nous a permis de:
 - Vérifier l'encombrement mécanique des composants.
 - Valider la cohérence globale avant la fabrication du PCB.
