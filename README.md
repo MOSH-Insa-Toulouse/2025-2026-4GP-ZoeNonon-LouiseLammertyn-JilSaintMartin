@@ -178,7 +178,7 @@ La lecture de tension aux bornes du capteur graphite ou du flexor commercial s'e
 Le reste du code permet de gérer le reste des composants. Une fonction permet de gérer l'affichage sur l'écran OLED. Sur cet écran, l'affichage d'un menu permet d'intéragir avec l'utilisateur. Une fonction gère l'encodeur rotatoire qui permet à l'utilisateur de se déplacer sur le menu. Enfin, une dernière fonction permet d'envoyer les données mesurées à l'aide du module bluetooth sur un téléphone connecté. 
 
 <p align="center">
-  <img width="822" height="634" alt="Menu" src="https://github.com/user-attachments/assets/2f5d6a8d-2e0d-4d96-b905-f57ed69e53e4" />
+  <img width="82.2" height="63.4" alt="Menu" src="https://github.com/user-attachments/assets/2f5d6a8d-2e0d-4d96-b905-f57ed69e53e4" />
 </p>
 <p align="center">
   <em>Menu affiché sur l'écran OLED</em>
