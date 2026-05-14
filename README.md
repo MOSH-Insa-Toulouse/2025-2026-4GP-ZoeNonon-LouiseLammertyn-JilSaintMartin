@@ -153,13 +153,17 @@ Une fois le routage validé sous KiCad et le fichier de perçage généré, nous
 Il a ensuite été nécessaire de réaliser un code arduino afin de pouvoir contrôler la carte. Ce code permet notamment d'effectuer les mesures sur le capteur graphite et de contrôler les différents composants tels que le module bluetooth, l'écran OLED et l'encodeur rotatoire. 
 
 **Mesure**
+
 La première partie du code est dédiée à la mesure de la tension aux bornes du capteur. A l'aide d'une fonction, la tension mesurée permet de déduire la résistance du capteur. 
+
 Une fonction de calibration a aussi été créee afin de calibrer la tension aux bornes du capteur. Comme l'arduino UNO permet de délivrer une tension entre 0V et 5V, il est intéressant de régler le potentiomètre numérique afin que la tension aux bornes du capteur lorsque le capteur n'est pas tordu, soit de 2,5V. Ce potentiomètre numérique remplace dans le montage électronique la résistance R2.
+
 Notre montage permet aussi d'utiliser un flexor commercial. Pour cela, une fonction au sein du code permet de mesurer la tension différement et d'en déduire la résistance. La calibration n'est cependant pas nécessaire sur ce capteur. 
 
 La lecture de tension aux bornes du capteur graphite ou du flexor commercial s'effectue toutes les 100ms. 
 
 **Composants pour l'utilisateur**
+
 Le reste du code permet de gérer le reste des composants. Une fonction permet de gérer l'affichage sur l'écran OLED. Sur cet écran, l'affichage d'un menu permet d'intéragir avec l'utilisateur. Une fonction gère l'encodeur rotatoire qui permet à l'utilisateur de se déplacer sur le menu. Enfin, une dernière fonction permet d'envoyer les données mesurées à l'aide du module bluetooth sur un téléphone connecté. 
 
 Pour consulter les différents fichiers, aller à [4.Arduino](https://github.com/MOSH-Insa-Toulouse/2025-2026-4GP-ZoeNonon-LouiseLammertyn-JilSaintMartin/tree/main/4.Arduino)
