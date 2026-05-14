@@ -195,18 +195,25 @@ Aller à [6.Banc de tests](https://github.com/MOSH-Insa-Toulouse/2025-2026-4GP-Z
 Pour cette partie, nous avons utilisé un banc de test conçu par les groupes précédents.
 Afin de vérifier les résultats obtenus, nous avons tracé la variation relative de la résistance en fonction de la déformation mécanique. La résistance relative est mesurée pour chaque courbure appliquée au banc de test.
 La déformation peut être calculée à partir de la géométrie du dispositif selon la relation suivante :
+
+<p align="center">
 <img width="195" height="77" alt="deformation" src="https://github.com/user-attachments/assets/36a6837b-f27e-4d52-a047-6e39a1ebdb71" />
- />
+</p>
 
  Ensuite, à l’aide du code Arduino, nous avons mesuré la résistance pour quatre types de crayons. Une mesure de référence à plat a d’abord été réalisée, puis des mesures ont été effectuées pour différentes courbures du banc de test, en compression et en tension.
 La résistance relative est définie par :
- 
+
+ <p align="center">
 <img width="218" height="77" alt="Rrelative" src="https://github.com/user-attachments/assets/a958a8b9-3cbb-4617-836b-28bab4d56c62" />
+</p>
 
 ### Résulat
 Nous avons obtenu les courbes suivantes :
+
+<p align="center">
 <img width="2827" height="1425" alt="Résultat_compression" src="https://github.com/user-attachments/assets/d60e430e-702e-48a4-a128-1575c572bf66" /> 
 <img width="3167" height="1595" alt="resultat_flexion" src="https://github.com/user-attachments/assets/cd6efece-dfbd-4445-902f-7a0a0d65fcdf" />
+</p>
 
 On observe que les résultats obtenus en flexion présentent une relation globalement linéaire entre la déformation et la variation de résistance. Le capteur est donc particulièrement adapté à la mesure de flexion. Cependant la durée de vie du capteur est courte 
 les valeurs sont tres vraibale lorsque que celui ci a deja été pliée.
