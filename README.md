@@ -6,10 +6,6 @@ Dans le cadre de la formation en Génie Physique de l'INSA Toulouse, les étudia
 <p align="center">
   <strong>Ce capteur peut-il remplacer un flexeur commercial ?</strong>
 </p>
-*Ce capteur peut-il remplacer un flexeur commercial ?*
-<span style="background-color:yellow">
-Texte
-</span>
 
 Ce capteur low-tech se base sur les travaux de
 
