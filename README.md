@@ -100,10 +100,9 @@ Le passage au routage permet de définir la disposition physique des éléments 
 <p align="center">
 <img width="755" height="602" alt="pcb" src="https://github.com/user-attachments/assets/fbcbb2ab-9b43-4ea8-ba69-89117455dc1d" />  
 
-</p>
-
 <p style="text-align:center;">
   *Visualisation du routage sur KiCad*
+</p>
 </p>
 
 **Visualisation 3D et vérification**
