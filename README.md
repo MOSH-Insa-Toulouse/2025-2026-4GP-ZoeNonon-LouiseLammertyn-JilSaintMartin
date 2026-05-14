@@ -7,11 +7,11 @@ Dans le cadre de la formation en Génie Physique de l'INSA Toulouse, les étudia
   <strong>Un capteur graphite low-tech peut-il remplacer un flexeur commercial ?</strong>
 </p>
 
-<table align="center">
+<table>
 <tr>
-<td bgcolor="#f99D77">
+<td bgcolor="yellow">
 
-<h3>❓ Ce capteur peut-il remplacer un flexeur commercial ?</h3>
+Texte avec fond jaune
 
 </td>
 </tr>
