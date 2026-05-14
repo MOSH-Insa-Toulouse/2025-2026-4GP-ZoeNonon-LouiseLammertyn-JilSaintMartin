@@ -151,7 +151,7 @@ Une fois le routage validé sous KiCad et le fichier de perçage généré, nous
 - Absence totale de court-circuit entre le 5V et le GND.
 
 <p align="center">
-  <img width="2160" height="2333" alt="Face_arrière_PCB" src="https://github.com/user-attachments/assets/f0820869-f02b-42d0-b7ef-85443980b2e2" />
+  <img width="216.0" height="233.3" alt="Face_arrière_PCB" src="https://github.com/user-attachments/assets/f0820869-f02b-42d0-b7ef-85443980b2e2" />
 </p>
 <p align="center">
   <em>Face arrière du PCB</em>
