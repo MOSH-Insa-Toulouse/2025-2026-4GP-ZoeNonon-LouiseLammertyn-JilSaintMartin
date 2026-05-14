@@ -159,7 +159,7 @@ Notre montage permet aussi d'utiliser un flexor commercial. Pour cela, une fonct
 
 
 <p align="center">
-  <img width="1236" height="2812" alt="Flexor" src="https://github.com/user-attachments/assets/aa4db0c4-3b84-4619-b7e6-af96fb5bf3de" />
+  <img width="123.6" height="281.2" alt="Flexor" src="https://github.com/user-attachments/assets/aa4db0c4-3b84-4619-b7e6-af96fb5bf3de" />
 </p>
 <p align="center">
   <em>Flexor commercial</em>
