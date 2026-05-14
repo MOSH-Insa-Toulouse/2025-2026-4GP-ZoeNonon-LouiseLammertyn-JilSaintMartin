@@ -33,7 +33,7 @@ En raison de sa structure, le capteur est très sensible aux petites déformatio
 Ce projet se divise en plusieurs étapes décrites ci-dessous. 
 
 <p align="center">
-<img width="540" height="91" alt="Logo en noir" src="https://github.com/user-attachments/assets/9826b191-ea54-4f84-a401-944e1344e9c3" />
+<img width="540" height="291" alt="Logo en noir" src="https://github.com/user-attachments/assets/9826b191-ea54-4f84-a401-944e1344e9c3" />
 </p>
 <p align="center">
   <em>Logo du capteur graphite "GraphiFlop"</em>
