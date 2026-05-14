@@ -7,11 +7,12 @@ Dans le cadre de la formation en Génie Physique de l'INSA Toulouse, les étudia
 
 Ce capteur low-tech se base sur les travaux de
 
-  [1]	K.-H. Müller, J. Herrmann, B. Raguse, G. Baxter, and T. Reda, “Percolation model for electron conduction in films of metal nanoparticles linked by organic molecules,” Phys. Rev. B, vol. 66, no. 7, p. 075417, Aug. 2002, doi: 10.1103/PhysRevB.66.075417.
+  - [1]	K.-H. Müller, J. Herrmann, B. Raguse, G. Baxter, and T. Reda, “Percolation model for electron conduction in films of metal nanoparticles linked by organic molecules,” Phys. Rev. B, vol. 66, no. 7, p. 075417, Aug. 2002, doi: 10.1103/PhysRevB.66.075417.
   
-  [2]	C.-W. Lin, Z. Zhao, J. Kim, and J. Huang, “Pencil Drawn Strain Gauges and Chemiresistors on Paper,” Sci. Rep., vol. 4, no. 1, p. 3812, Jan. 2014, doi: 10.1038/srep03812.
+  - [2]	C.-W. Lin, Z. Zhao, J. Kim, and J. Huang, “Pencil Drawn Strain Gauges and Chemiresistors on Paper,” Sci. Rep., vol. 4, no. 1, p. 3812, Jan. 2014, doi: 10.1038/srep03812.
   
-  [3]	K.-H. Müller, J. Herrmann, G. Wei, B. Raguse, and L. Wieczorek, “Electron transport in nanoparticle assemblies,” in 2010 International Conference on Nanoscience and Nanotechnology, Feb. 2010, pp. 316–318. doi: 10.1109/ICONN.2010.6045236.
+  - [3]	K.-H. Müller, J. Herrmann, G. Wei, B. Raguse, and L. Wieczorek, “Electron transport in nanoparticle assemblies,” in 2010 International Conference on Nanoscience and Nanotechnology, Feb. 2010, pp. 316–318. doi: 10.1109/ICONN.2010.6045236.
+
 
 
 ### Description du projet 
@@ -29,31 +30,36 @@ En raison de sa structure, le capteur est très sensible aux petites déformatio
 
 Ce projet se divise en plusieurs étapes décrites ci-dessous. 
 
+
+
 ### Livrables
-Pour valider ce projet nous devons proposé : 
-- Un pcb pour faire les circuits éléectroniques de tous nos composants
-- Un code arduino, qui permet de mesure la resistance et de faire nos tests
-- un datasheet, présentant les caractérique de notre capteur graphique 
-- une interface python pour visualiser en direct nos résultats
+Pour valider ce projet nous devons proposer: 
+- Un circuit imprimé (PCB) pour créer les circuits électroniques reliant nos composants
+- Un code arduino qui permet de contrôler un ARDUINO afin de mesurer la résistance du capteur, faire nos tests et contrôler des éléments tels que le bluetooth, l'écran ou l'encodeur rotatoire
+- Une datasheet présentant les caractéristiques du capteur graphite fabriqué
+- Une application ANDROID permettant de recevoir les données par bluetooth et les afficher sur un graphique
+
+
 
 ### Matériel
-Afin de valide l'utilisation de ce capteur, nos utilisons un PCB composé : 
+Afin de réaliser ce capteur, nous utilisons le matériel suivant: 
 
-Une carte Arduino UNO
-Un écran OLED (I2C)
-Un potentiomètre numérique MCP41050
-Un encodeur rotatif
-Un capteur de déformation en papier low tech 
+- Une carte Arduino UNO
+- Un écran OLED (I2C)
+- Un potentiomètre numérique MCP41050
+- Un encodeur rotatoire
+- Un capteur de déformation en papier low tech
+- Un module bluetooth
 
 
-Pour réaliser l'amplificateur transimpédance, nous avons utilisé
+Pour réaliser l'amplificateur transimpédance, nous avons utilisé: 
 
 - Un amplificateur opérationnel LTC1050
 - Deux condensateurs de 100nF
-- Un condensateur de 1uF
-- Deux résistances de 100k
-- Deux résistances de 1k
-- Une résistance de 10k
+- Un condensateur de 1µF
+- Deux résistances de 100kΩ
+- Deux résistances de 1kΩ
+- Une résistance de 10kΩ
 
 ### LTspice
 La première étape de se projet simuler le circuit de capteur sur LT spice. 
