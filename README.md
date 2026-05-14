@@ -4,8 +4,18 @@
 Dans le cadre de la formation en Génie Physique de l'INSA Toulouse, les étudiants de 4ème année doivent réaliser un capteur low-tech à base de graphite et en faire une analyse critique. Le but final étant de répondre à la question suivante:  
 
 <p align="center">
-  <strong>Ce capteur peut-il remplacer un flexeur commercial ?</strong>
+  <strong>Un capteur graphite low-tech peut-il remplacer un flexeur commercial ?</strong>
 </p>
+
+<table align="center">
+<tr>
+<td bgcolor="#ffe599">
+
+<h3>❓ Ce capteur peut-il remplacer un flexeur commercial ?</h3>
+
+</td>
+</tr>
+</table>
 
 Ce capteur low-tech se base sur les travaux de
 
