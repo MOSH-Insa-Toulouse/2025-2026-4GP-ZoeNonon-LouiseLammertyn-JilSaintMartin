@@ -32,7 +32,12 @@ En raison de sa structure, le capteur est très sensible aux petites déformatio
 
 Ce projet se divise en plusieurs étapes décrites ci-dessous. 
 
-
+<p align="center">
+<img width="104.0" height="79.1" alt="Logo en noir" src="https://github.com/user-attachments/assets/9826b191-ea54-4f84-a401-944e1344e9c3" />
+</p>
+<p align="center">
+  <em>Logo du capteur graphite "GraphiFlop"</em>
+</p>
 
 ### Livrables
 Pour valider ce projet nous devons proposer: 
@@ -79,7 +84,6 @@ Dans la suite du projet, R2 sera remplacée par un potentiomètre numérique, af
 <p align="center">
   <em>Circuit d'amplification transimpédance sur LTspice</em>
 </p>
-
 
 Pour consulter les différents fichiers, aller à [2.LTSpice](https://github.com/MOSH-Insa-Toulouse/2025-2026-4GP-ZoeNonon-LouiseLammertyn-JilSaintMartin/tree/main/2.LTSpice)
 
@@ -145,6 +149,13 @@ Pour consulter les différents fichiers, aller à [3.KiCad](https://github.com/M
 Une fois le routage validé sous KiCad et le fichier de perçage généré, nous avons pu imprimer notre circuit électronique (merci Cathy <3). Ensuite, nous avons percé et soudé le montage complet. Avant de passer au code Arduino, nous avons vérifié que tout fonctionnait bien à l'aide d'un multimètre, en effectuant les étapes suivantes:
 - Vérification que chaque piste relie bien les bons points du schéma.
 - Absence totale de court-circuit entre le 5V et le GND.
+
+<p align="center">
+  <img width="2160" height="2333" alt="Face_arrière_PCB" src="https://github.com/user-attachments/assets/f0820869-f02b-42d0-b7ef-85443980b2e2" />
+</p>
+<p align="center">
+  <em>Face arrière du PCB</em>
+</p>
 
 ### Arduino
 Il a ensuite été nécessaire de réaliser un code arduino afin de pouvoir contrôler la carte. Ce code permet notamment d'effectuer les mesures sur le capteur graphite et de contrôler les différents composants tels que le module bluetooth, l'écran OLED et l'encodeur rotatoire. 
