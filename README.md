@@ -28,6 +28,13 @@ La déformation mécanique affecte ce réseau :
 La réponse du capteur est donc régie par les variations du réseau et les effets de tunnel entre particules voisines.
 En raison de sa structure, le capteur est très sensible aux petites déformations, mais il est également influencé par des paramètres de fabrication tels que la densité du graphite, la dureté du crayon et les conditions environnementales (humidité, température).
 
+<p align="center">
+<img width="493" height="522" alt="échelle_crayon" src="https://github.com/user-attachments/assets/d24abe62-c855-4626-a60a-fd9a1d7aac82" />
+</p>
+<p align="center">
+  <em>Echelle évaluant la dureté de différentes mines de crayons</em>
+</p>
+
 **La variation de résistance qui en résulte peut être mesurée à l'aide d'un circuit à transimpédance, afin d'obtenir un signal analogique.**
 
 Ce projet se divise en plusieurs étapes décrites ci-dessous. 
@@ -198,10 +205,23 @@ Le reste du code permet de gérer le reste des composants. Une fonction permet d
 Pour consulter les différents fichiers, aller à [4.Arduino](https://github.com/MOSH-Insa-Toulouse/2025-2026-4GP-ZoeNonon-LouiseLammertyn-JilSaintMartin/tree/main/4.Arduino)
 
 ### Application
-Aller à [5.Application](https://github.com/MOSH-Insa-Toulouse/2025-2026-4GP-ZoeNonon-LouiseLammertyn-JilSaintMartin/tree/main/5.Application)
+A l'aide du site internet "MIT App Inventor", nous avons pu créer une interface pour téléphone ANDROID sur laquelle l'arduino UNO peut communiquer des données par bluetooth. Le code de cette application se base sur l'empilage de blocs de code. 
+
+Le code traite d'abord la communication avec le module bluetooth de l'arduino en s'assurant que les données reçues sont bien des valeurs numériques positives. Une fois les données réceptionnées, les données sont affichées sur un graphique qui se met à jour en continu. 
+
+L'application permet par ailleurs d'afficher le mode de mesure en cours (mesure de tension ou de résistance) ainsi que le capteur utilisé. 
+
+<p align="center">
+  <img width="422" height="793" alt="interface_app" src="https://github.com/user-attachments/assets/4e8317a5-28c7-4097-9d91-2a2d5d61b539" />
+</p>
+<p align="center">
+  <em>Interface de l'application GraphiFlop</em>
+</p>
+
+Pour consulter les différents fichiers, aller à [5.Application](https://github.com/MOSH-Insa-Toulouse/2025-2026-4GP-ZoeNonon-LouiseLammertyn-JilSaintMartin/tree/main/5.Application)
 
 ### Banc de tests
-Aller à [6.Banc de tests](https://github.com/MOSH-Insa-Toulouse/2025-2026-4GP-ZoeNonon-LouiseLammertyn-JilSaintMartin/tree/main/6.Banc%20de%20tests)
+Pour consulter les différents fichiers, aller à [6.Banc de tests](https://github.com/MOSH-Insa-Toulouse/2025-2026-4GP-ZoeNonon-LouiseLammertyn-JilSaintMartin/tree/main/6.Banc%20de%20tests)
 
 Pour cette partie, nous avons utilisé un banc de test conçu par les groupes précédents.
 Afin de vérifier les résultats obtenus, nous avons tracé la variation relative de la résistance en fonction de la déformation mécanique. La résistance relative est mesurée pour chaque courbure appliquée au banc de test.
@@ -237,7 +257,7 @@ Ce comportement peut s’expliquer par un phénomène mécanique : en compressio
 
 Enfin, nous n’avons pas réussi à obtenir de mesures exploitables avec les crayons H et 2H, car le signal électrique généré était trop faible pour être détecté par le système de mesure.
 
-Aller à [7.Datasheet](https://github.com/MOSH-Insa-Toulouse/2025-2026-4GP-ZoeNonon-LouiseLammertyn-JilSaintMartin/tree/main/7.Datasheet)
+Pour consulter les différents fichiers, aller à [7.Datasheet](https://github.com/MOSH-Insa-Toulouse/2025-2026-4GP-ZoeNonon-LouiseLammertyn-JilSaintMartin/tree/main/7.Datasheet)
 
 ### Conclusion (répondre à la question: est ce que ce capteur peut remplacer un flexeur?)
 
