@@ -9,7 +9,7 @@ Dans le cadre de la formation en Génie Physique de l'INSA Toulouse, les étudia
 
 <table align="center">
 <tr>
-<td bgcolor="#ffe599">
+<td bgcolor="#f99D77">
 
 <h3>❓ Ce capteur peut-il remplacer un flexeur commercial ?</h3>
 
