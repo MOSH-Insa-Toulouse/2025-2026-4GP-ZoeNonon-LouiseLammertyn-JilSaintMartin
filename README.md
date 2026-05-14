@@ -5,9 +5,12 @@ Dans le cadre de la formation en Génie Physique de l'INSA Toulouse, les étudia
 
 *Ce capteur peut-il remplacer un flexeur commercial?*
 
-Ce capteur low-tech se base sur les travaux de 
+Ce capteur low-tech se base sur les travaux de
+
   [1]	K.-H. Müller, J. Herrmann, B. Raguse, G. Baxter, and T. Reda, “Percolation model for electron conduction in films of metal nanoparticles linked by organic molecules,” Phys. Rev. B, vol. 66, no. 7, p. 075417, Aug. 2002, doi: 10.1103/PhysRevB.66.075417.
+  
   [2]	C.-W. Lin, Z. Zhao, J. Kim, and J. Huang, “Pencil Drawn Strain Gauges and Chemiresistors on Paper,” Sci. Rep., vol. 4, no. 1, p. 3812, Jan. 2014, doi: 10.1038/srep03812.
+  
   [3]	K.-H. Müller, J. Herrmann, G. Wei, B. Raguse, and L. Wieczorek, “Electron transport in nanoparticle assemblies,” in 2010 International Conference on Nanoscience and Nanotechnology, Feb. 2010, pp. 316–318. doi: 10.1109/ICONN.2010.6045236.
 
 
