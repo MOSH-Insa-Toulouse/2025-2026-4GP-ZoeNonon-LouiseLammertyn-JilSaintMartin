@@ -150,25 +150,21 @@ Une fois le routage validé sous KiCad et le fichier de perçage généré, nous
 <img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/a1ab8def-40c3-416e-80f5-0c1f6ff07c94" />
 
 ### Arduino
-Aller à [4.Arduino](https://github.com/MOSH-Insa-Toulouse/2025-2026-4GP-ZoeNonon-LouiseLammertyn-JilSaintMartin/tree/main/4.Arduino)
-Ensuite nous avons mis en place le code arduino pour pouvoir utilisé le cpateur. Pour cela nous avons mis en place un menu afficher 
-sur l'écran oled pour choisir les différente fonction 
+Il a ensuite été nécessaire de réaliser un code arduino afin de pouvoir contrôler la carte. Ce code permet notamment d'effectuer les mesures sur le capteur graphite et de contrôler les différents composants tels que le module bluetooth, l'écran OLED et l'encodeur rotatoire. 
 
-  #### 1 Tension 
-  Affiche la tension au borne du capteur sur l'écran Oled 
+**Mesure**
+La première partie du code est dédiée à la mesure de la tension aux bornes du capteur. A l'aide d'une fonction, la tension mesurée permet de déduire la résistance du capteur. 
+Une fonction de calibration a aussi été créee afin de calibrer la tension aux bornes du capteur. Comme l'arduino UNO permet de délivrer une tension entre 0V et 5V, il est intéressant de régler le potentiomètre numérique afin que la tension aux bornes du capteur lorsque le capteur n'est pas tordu, soit de 2,5V. Ce potentiomètre numérique remplace dans le montage électronique la résistance R2.
+Notre montage permet aussi d'utiliser un flexor commercial. Pour cela, une fonction au sein du code permet de mesurer la tension différement et d'en déduire la résistance. La calibration n'est cependant pas nécessaire sur ce capteur. 
 
-  #### 2 Résistance
-  Affiche la resistance sur l'écran Oled
-  
-  #### 3 Calibration 
-  Gère la resistance R2 pour avoir une tension au repos de 2.5 V
+La lecture de tension aux bornes du capteur graphite ou du flexor commercial s'effectue toutes les 100ms. 
 
-   #### 3 Capteur
-  Permet de passer du flex sensor au capteur graphite 
+**Composants pour l'utilisateur**
+Le reste du code permet de gérer le reste des composants. Une fonction permet de gérer l'affichage sur l'écran OLED. Sur cet écran, l'affichage d'un menu permet d'intéragir avec l'utilisateur. Une fonction gère l'encodeur rotatoire qui permet à l'utilisateur de se déplacer sur le menu. Enfin, une dernière fonction permet d'envoyer les données mesurées à l'aide du module bluetooth sur un téléphone connecté. 
+
+Pour consulter les différents fichiers, aller à [4.Arduino](https://github.com/MOSH-Insa-Toulouse/2025-2026-4GP-ZoeNonon-LouiseLammertyn-JilSaintMartin/tree/main/4.Arduino)
 
   <img width="3024" height="4032" alt="menu" src="https://github.com/user-attachments/assets/2fc0c662-b7a5-4879-86e9-17c6febe129d" />
-
-
 
 ### Application
 Aller à [5.Application](https://github.com/MOSH-Insa-Toulouse/2025-2026-4GP-ZoeNonon-LouiseLammertyn-JilSaintMartin/tree/main/5.Application)
