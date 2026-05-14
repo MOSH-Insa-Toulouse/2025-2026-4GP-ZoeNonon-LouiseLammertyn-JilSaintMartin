@@ -70,8 +70,13 @@ Le principe du montage est de convertir le courant traversant le capteur en une 
 Un filtre passe-bas est ajouté en sortie afin de réduire le bruit et de fournir un signal stable, compatible avec une entrée analogique.
 
 Dans la suite du projet, R2 sera remplacée par un potentiomètre numérique, afin de permettre la calibration de l’Arduino sur une plage de tension comprise entre 0 et 5 V.
-<img width="885" height="337" alt="capteur" src="https://github.com/user-attachments/assets/771fa828-8ae2-4b6b-a42e-7ae31a5f30cd" />
 
+<p align="center">
+<img width="885" height="337" alt="capteur" src="https://github.com/user-attachments/assets/771fa828-8ae2-4b6b-a42e-7ae31a5f30cd" />
+</p>
+<p align="center">
+  <em>Circuit d'amplification transimpédance sur LTspice</em>
+</p>
 
 
 Pour consulter les différents fichiers, aller à [2.LTSpice](https://github.com/MOSH-Insa-Toulouse/2025-2026-4GP-ZoeNonon-LouiseLammertyn-JilSaintMartin/tree/main/2.LTSpice)
@@ -89,7 +94,13 @@ La première étape consiste à reproduire le circuit de l’amplificateur trans
 - Intégration des composants: Nous y plaçons l'AOP LTC1050, les composants passifs (résistances, condensateurs) et les connecteurs nécessaires à l'Arduino Uno, l'écran OLED et l'encodeur rotatif.
 - Association des empreintes: Chaque symbole schématique est lié à une empreinte physique réelle. Cette étape est cruciale pour assurer que les composants pourront être soudés correctement sur le cricuit final.
 
-<img width="852" height="602" alt="shm" src="https://github.com/user-attachments/assets/e6f07f1a-847f-4858-b204-001d56c1e0d7" />
+
+<p align="center">
+ <img width="852" height="602" alt="shm" src="https://github.com/user-attachments/assets/e6f07f1a-847f-4858-b204-001d56c1e0d7" />
+</p>
+<p align="center">
+  <em>Visualisation de la schématique du montage sur KiCad</em>
+</p>
 
 **Routage et placement**
 
@@ -101,7 +112,7 @@ Le passage au routage permet de définir la disposition physique des éléments 
 <img width="755" height="602" alt="pcb" src="https://github.com/user-attachments/assets/fbcbb2ab-9b43-4ea8-ba69-89117455dc1d" />  
 </p>
 <p align="center">
-  <em>Visualisation du routage sur KiCad</em>
+  <em>Visualisation du routage du montage sur KiCad</em>
 </p>
 
 **Visualisation 3D et vérification**
@@ -110,8 +121,12 @@ Enfin, KiCad permet une modélisation 3D du projet. Cet outil nous a permis de:
 - Vérifier l'encombrement mécanique des composants.
 - Valider la cohérence globale avant la fabrication du PCB.
 
-<img width="2162" height="1256" alt="image" src="https://github.com/user-attachments/assets/fb70385a-7eba-4ba1-b248-b9d658bd53f9" />
-
+<p align="center">
+  <img width="2162" height="1256" alt="image" src="https://github.com/user-attachments/assets/fb70385a-7eba-4ba1-b248-b9d658bd53f9" />
+</p>
+<p align="center">
+  <em>Visualisation 3D du montage global sur KiCad</em>
+</p>
 
 
 Pour consulter les différents fichiers, aller à [3.KiCad](https://github.com/MOSH-Insa-Toulouse/2025-2026-4GP-ZoeNonon-LouiseLammertyn-JilSaintMartin/tree/main/3.KiCad)
