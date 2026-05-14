@@ -14,21 +14,18 @@ Ce capteur low-tech se base sur les travaux de
   [3]	K.-H. Müller, J. Herrmann, G. Wei, B. Raguse, and L. Wieczorek, “Electron transport in nanoparticle assemblies,” in 2010 International Conference on Nanoscience and Nanotechnology, Feb. 2010, pp. 316–318. doi: 10.1109/ICONN.2010.6045236.
 
 
-
-
-Description du projet 
+### Description du projet 
 Le capteur de contrainte en graphite repose sur un réseau conducteur de particules de graphite déposées sur un substrat en papier.
-Lorsqu'on trace un trait au crayon sur du papier, les particules de graphite adhèrent aux fibres, formant ainsi un mince film conducteur.
+Lorsque l'on trace un trait au crayon sur du papier, les particules de graphite adhèrent aux fibres, formant ainsi un mince film conducteur.
 Ce film se comporte comme un système granulaire désordonné où la conduction électrique s'effectue par le biais des contacts entre les particules de graphite.
 La déformation mécanique affecte ce réseau :
   - Sous contrainte de traction, la distance entre les particules augmente, ce qui réduit les contacts électriques et augmente la résistance.
   - Sous contrainte de compression, les particules sont rapprochées, ce qui améliore la connectivité et diminue la résistance.
 
-La réponse du capteur est donc régie par les variations du réseau  et les effets de tunnel entre particules voisines.
+La réponse du capteur est donc régie par les variations du réseau et les effets de tunnel entre particules voisines.
 En raison de sa structure, le capteur est très sensible aux petites déformations, mais il est également influencé par des paramètres de fabrication tels que la densité du graphite, la dureté du crayon et les conditions environnementales (humidité, température).
 
-La variation de résistance qui en résulte peut être mesurée à l'aide d'un circuit à transimpédance, afin d'obtenir un signal analogique.
-
+**La variation de résistance qui en résulte peut être mesurée à l'aide d'un circuit à transimpédance, afin d'obtenir un signal analogique.**
 
 Ce projet se divise en plusieurs étapes décrites ci-dessous. 
 
